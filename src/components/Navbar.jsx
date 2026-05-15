@@ -10,12 +10,12 @@ function Navbar({ user }) {
 
             <div className="userinfo">
                 <p className="usernameshow">
-                    User: {user.name}
+User: {user?.name}
+
                 </p>
 
                 <p className="groupcodeshow">
-                    Group Code: {user.groupCode}
-                </p>
+Group Code: {user?.groupCode}                </p>
             </div>
 
         </div>
