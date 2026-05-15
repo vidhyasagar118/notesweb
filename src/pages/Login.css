@@ -1,0 +1,300 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+
+body{
+
+    font-family: Arial, sans-serif;
+
+    background: linear-gradient(
+        135deg,
+        #0f172a,
+        #1e293b
+    );
+
+    min-height: 100vh;
+
+    overflow-x: hidden;
+
+    position: relative;
+}
+
+/* Logo Heading */
+
+.mainlogo{
+
+    position: absolute;
+
+    top: 40px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    font-size: 72px;
+
+    font-weight: 800;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+    background: linear-gradient(
+        135deg,
+        #60a5fa,
+        #2563eb,
+        #93c5fd
+    );
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    text-shadow: 0px 0px 25px rgba(59,130,246,0.5);
+
+    animation: glowLogo 2s infinite alternate;
+}
+
+/* Login Box */
+
+.login-box {
+
+    position: absolute;
+
+    top: 58%;
+
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 400px;
+
+    padding: 40px;
+
+    border-radius: 25px;
+
+    background: rgba(255,255,255,0.08);
+
+    backdrop-filter: blur(15px);
+
+    box-shadow: 0 10px 35px rgba(0,0,0,0.45);
+
+    animation: fadeIn 1s ease;
+}
+
+/* Login Heading */
+
+.login-box h2 {
+
+    text-align: center;
+
+    margin-bottom: 35px;
+
+    font-size: 40px;
+
+    color: white;
+
+    font-weight: 700;
+}
+
+/* Inputs */
+
+.logininame,
+.loginpassword {
+
+    width: 100%;
+
+    padding: 16px;
+
+    margin-top: 18px;
+
+    border: none;
+
+    outline: none;
+
+    border-radius: 14px;
+
+    background: rgba(255,255,255,0.10);
+
+    color: white;
+
+    font-size: 16px;
+
+    transition: 0.3s;
+}
+
+/* Placeholder */
+
+.logininame::placeholder,
+.loginpassword::placeholder{
+
+    color: #d1d5db;
+}
+
+/* Input Focus */
+
+.logininame:focus,
+.loginpassword:focus{
+
+    border: 1px solid #3b82f6;
+
+    box-shadow: 0px 0px 14px rgba(59,130,246,0.6);
+
+    transform: scale(1.02);
+}
+
+/* Main Button */
+
+.loginbtn {
+
+    width: 100%;
+
+    padding: 15px;
+
+    margin-top: 28px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #3b82f6
+    );
+
+    color: white;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+/* Button Hover */
+
+.loginbtn:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow: 0px 12px 22px rgba(37,99,235,0.45);
+}
+
+/* Text */
+
+.login-box p {
+
+    text-align: center;
+
+    margin-top: 22px;
+
+    color: #d1d5db;
+
+    font-size: 18px;
+}
+
+/* Create Button */
+
+.createbtn {
+
+    width: 100%;
+
+    padding: 14px;
+
+    margin-top: 16px;
+
+    border: 1px solid rgba(255,255,255,0.2);
+
+    border-radius: 14px;
+
+    background: transparent;
+
+    color: #60a5fa;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+/* Create Hover */
+
+.createbtn:hover {
+
+    background: rgba(255,255,255,0.08);
+
+    color: white;
+
+    transform: translateY(-2px);
+}
+
+/* Fade Animation */
+
+@keyframes fadeIn {
+
+    from{
+
+        opacity: 0;
+
+        transform: translate(-50%, -40%);
+    }
+
+    to{
+
+        opacity: 1;
+
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Glow Animation */
+
+@keyframes glowLogo{
+
+    from{
+        filter: drop-shadow(0px 0px 8px #2563eb);
+    }
+
+    to{
+        filter: drop-shadow(0px 0px 22px #60a5fa);
+    }
+}
+
+/* Responsive */
+
+@media(max-width:600px){
+
+    .mainlogo{
+
+        font-size: 42px;
+
+        top: 30px;
+    }
+
+    .login-box{
+
+        width: 90%;
+
+        padding: 30px;
+
+        top: 55%;
+    }
+
+    .login-box h2{
+
+        font-size: 32px;
+    }
+
+    .loginbtn{
+
+        font-size: 18px;
+    }
+}

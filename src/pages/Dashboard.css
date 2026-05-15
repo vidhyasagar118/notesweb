@@ -1,0 +1,171 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    overflow-x: hidden;
+    font-family: Arial, sans-serif;
+}
+
+.dashbordmaindiv{
+
+    min-height: 100vh;
+
+    background: rgba(255, 255, 255, 0.881);
+    color:black;
+
+    padding-bottom: 50px;
+}
+
+/* ONLY CONTENT WIDTH */
+
+.dashcontainer{
+
+    width: 60%;
+
+    max-width: 1300px;
+
+    margin: auto;
+
+    padding-top: 40px;
+}
+.navbarhandle{
+    width: 100vw;
+}
+
+
+.uploadfile,
+.opensareheading,
+.mysubjects,
+.headingshaareowner{
+
+    font-size: 34px;
+    margin-bottom: 20px;
+    margin-top: 30px;
+
+    color:black;
+
+    animation: fadeInUp 0.8s ease;
+}
+
+
+.subjectinp,
+.fileuploadinp,
+.gropinp{
+
+    width: 100%;
+
+    padding: 15px;
+
+    margin-top: 15px;
+
+    border: none;
+    outline: none;
+
+    border-radius: 14px;
+
+    background:black;
+
+    backdrop-filter: blur(10px);
+
+    color:white;
+
+    font-size: 16px;
+
+    transition: 0.3s;
+}
+
+.subjectinp::placeholder,
+.gropinp::placeholder{
+    color:white;
+}
+
+.subjectinp:focus,
+.fileuploadinp:focus,
+.gropinp:focus{
+
+    border: 1px solid #3b82f6;
+
+    box-shadow: 0px 0px 12px rgba(59,130,246,0.5);
+}
+
+/* Buttons */
+
+.uploadbtn,
+.opengroupbtn{
+
+    padding: 14px 32px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: linear-gradient(135deg,#2563eb,#3b82f6);
+
+    color:black;
+
+    font-size: 17px;
+
+    margin-top: 22px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+    font-weight: bold;
+}
+
+.uploadbtn:hover,
+.opengroupbtn:hover{
+
+    transform: translateY(-3px);
+
+    box-shadow: 0px 10px 20px rgba(37,99,235,0.4);
+}
+
+/* Divider */
+
+hr{
+
+    margin: 45px 0;
+
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Animation */
+
+@keyframes fadeInUp{
+
+    from{
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to{
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+    .dashcontainer{
+        width: 95%;
+    }
+
+    .uploadfile,
+    .opensareheading,
+    .mysubjects,
+    .headingshaareowner{
+        font-size: 26px;
+    }
+
+    .uploadbtn,
+    .opengroupbtn{
+        width: 100%;
+    }
+}

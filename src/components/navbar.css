@@ -1,0 +1,94 @@
+/* Navbar */
+
+.navbar{
+
+    width: 100%;
+
+    height: 100px;
+
+    padding: 10px 40px;
+
+    background: rgba(15,23,42,0.97);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+
+    box-shadow: 0px 8px 25px rgba(0,0,0,0.25);
+}
+
+/* Heading */
+
+.navhead{
+
+    margin-left: 20px;
+
+    font-size: 40px;   /* smaller */
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    background: linear-gradient(
+        135deg,
+        #60a5fa,
+        #2563eb,
+        #93c5fd
+    );
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+}
+
+/* User Box */
+/* User Box */
+
+.userinfo{
+
+    padding: 10px 22px;
+
+    margin-right: 40px;
+
+    border-radius: 14px;
+
+    background: rgba(255,255,255,0.08);
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    min-height: 65px;
+}
+
+/* Username */
+
+.usernameshow{
+
+    color: white;
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+    margin-bottom: 4px;
+}
+
+/* Group Code */
+
+.groupcodeshow{
+
+    color: #93c5fd;
+
+    font-size: 16px;
+
+    font-weight: 500;
+}
