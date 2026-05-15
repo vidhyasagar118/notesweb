@@ -17,7 +17,7 @@ sessionStorage.removeItem("user");
         <div className="navbar">
 
             <h2 className="navhead">
-                Student File Manager
+                NOTES.COM
             </h2>
 
             <div className="userinfo">
