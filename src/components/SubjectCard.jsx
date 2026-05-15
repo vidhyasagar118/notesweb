@@ -1,5 +1,5 @@
 import "./subjectcard.css"
-function SubjectCard({ subject, files }) {
+function SubjectCard({ subject, files, deleteFile }){
 
     return (
         <div className="subjectbox">
@@ -35,6 +35,12 @@ href={`https://notesweb-backend-9yi6.onrender.com/${file.filepath}`}            
                                     Download
                                 </button>
                             </a>
+                            <button
+    className="deletebtn"
+    onClick={() => deleteFile(file._id)}
+>
+    Delete
+</button>
 
                         </div>
                     </div>

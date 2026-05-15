@@ -5,7 +5,7 @@ import SubjectCard from "../components/SubjectCard";
 import "./Dashboard.css"
 function Dashboard() {
 
-const user = JSON.parse(localStorage.getItem("user")) || {};
+    const user = JSON.parse(localStorage.getItem("user")) || {};
     const [subject, setSubject] = useState("");
     const [file, setFile] = useState(null);
     const [files, setFiles] = useState({});
@@ -67,91 +67,108 @@ const user = JSON.parse(localStorage.getItem("user")) || {};
         }
     };
 
+    const deleteFile = async (id) => {
+
+        try {
+
+            await API.delete(`/files/${id}`);
+
+            alert("File Deleted");
+
+            loadFiles();
+
+        } catch (err) {
+
+            console.log(err);
+            alert("Delete Failed");
+        }
+    };
     return (
         <>
-<div className="navbarhandle">        
-        <Navbar user={user} />
-</div>
-        <div className="dashbordmaindiv">
+            <div className="navbarhandle">
+                <Navbar user={user} />
+            </div>
+            <div className="dashbordmaindiv">
 
 
-            <div className="dashcontainer">
+                <div className="dashcontainer">
 
-                <h2 className="uploadfile ">Upload File</h2>
+                    <h2 className="uploadfile ">Upload File</h2>
 
-                <input
-                className="subjectinp"
-                    type="text"
-                    placeholder="Enter Subject"
-                    value={subject}
-                    onChange={(e) => setSubject(e.target.value)}
-                />
+                    <input
+                        className="subjectinp"
+                        type="text"
+                        placeholder="Enter Subject"
+                        value={subject}
+                        onChange={(e) => setSubject(e.target.value)}
+                    />
 
-                <input
-                className="fileuploadinp"
-                    type="file"
-                    onChange={(e) => setFile(e.target.files[0])}
-                />
+                    <input
+                        className="fileuploadinp"
+                        type="file"
+                        onChange={(e) => setFile(e.target.files[0])}
+                    />
 
-                <button onClick={uploadFile} className="uploadbtn">
-                    Upload
-                </button>
+                    <button onClick={uploadFile} className="uploadbtn">
+                        Upload
+                    </button>
 
-                <hr />
+                    <hr />
 
-                <h2 className="opensareheading">Open Shared Files</h2>
+                    <h2 className="opensareheading">Open Shared Files</h2>
 
-                <input
-                className="gropinp"
-                    type="text"
-                    placeholder="Enter Group Code"
-                    value={groupCode}
-                    onChange={(e) => setGroupCode(e.target.value)}
-                />
+                    <input
+                        className="gropinp"
+                        type="text"
+                        placeholder="Enter Group Code"
+                        value={groupCode}
+                        onChange={(e) => setGroupCode(e.target.value)}
+                    />
 
-                <button className="opengroupbtn" onClick={openShared}>
-                    Open
-                </button>
+                    <button className="opengroupbtn" onClick={openShared}>
+                        Open
+                    </button>
 
-                <hr />
+                    <hr />
 
-                <h2 className="mysubjects">My Subjects</h2>
+                    <h2 className="mysubjects">My Subjects</h2>
 
-                {
-                    Object.keys(files).map((subject) => (
-                        <SubjectCard
-                            key={subject}
-                            subject={subject}
-                            files={files[subject]}
-                        />
-                    ))
-                }
+                    {
+                        Object.keys(files).map((subject) => (
+                            <SubjectCard
+                                key={subject}
+                                subject={subject}
+                                files={files[subject]}
+                            />
+                        ))
+                    }
 
-                {
-                    sharedFiles && (
-                        <div>
+                    {
+                        sharedFiles && (
+                            <div>
 
-                            <h2 className="headingshaareowner">
-                                Shared By: {sharedFiles.owner}
-                            </h2>
+                                <h2 className="headingshaareowner">
+                                    Shared By: {sharedFiles.owner}
+                                </h2>
 
-                            {
-                                Object.keys(sharedFiles.grouped).map((subject) => (
-                                    <SubjectCard
-                                        key={subject}
-                                        subject={subject}
-                                        files={sharedFiles.grouped[subject]}
-                                    />
-                                ))
-                            }
+                                {
+                                    Object.keys(sharedFiles.grouped).map((subject) => (
+                                        <SubjectCard
+                                            key={subject}
+                                            subject={subject}
+                                            files={files[subject]}
+                                            deleteFile={deleteFile}
+                                        />
+                                    ))
+                                }
 
-                        </div>
-                    )
-                }
+                            </div>
+                        )
+                    }
+
+                </div>
 
             </div>
-
-        </div>
         </>
     );
 }
