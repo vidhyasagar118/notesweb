@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import API from "../api";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Login.css"
+import "./Login.css";
+
 function Login() {
 
     const navigate = useNavigate();
@@ -14,21 +14,14 @@ function Login() {
         password: ""
     });
 
-   
-useEffect(() => {
-    const token = localStorage.getItem("token");
+    useEffect(() => {
 
-    if (token) {
-        API.get("/auth/verify")
-            .then(() => {
-                navigate("/dashboard");
-            })
-            .catch(() => {
-                localStorage.clear();
-            });
-    }
-}, []); 
+const token = sessionStorage.getItem("token");
+        if (token) {
+            navigate("/dashboard");
+        }
 
+    }, []);
 
     const handleSubmit = async () => {
 
@@ -38,9 +31,12 @@ useEffect(() => {
 
                 const res = await API.post("/auth/login", form);
 
-                localStorage.setItem("token", res.data.token);
-                localStorage.setItem("user", JSON.stringify(res.data.user));
+               sessionStorage.setItem("token", res.data.token);
 
+sessionStorage.setItem(
+    "user",
+    JSON.stringify(res.data.user)
+);
                 navigate("/dashboard");
 
             } else {
@@ -53,53 +49,78 @@ useEffect(() => {
             }
 
         } catch (err) {
-            alert(err.response.data.message);
+
+            alert(
+                err.response?.data?.message ||
+                "Something went wrong"
+            );
         }
-    }
+    };
 
     return (
         <>
-<h1 className="mainlogo">
-    notes.com
-</h1>
-        <div className="login-box">
-            <h2>{isLogin ? "Login" : "Create Account"}</h2>
+            <h1 className="mainlogo">
+                notes.com
+            </h1>
 
-            <input
-            className="logininame"
-                placeholder="Name"
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-            />
+            <div className="login-box">
 
-            <input
-            className="loginpassword"
-                type="password"
-                placeholder="Password"
-                onChange={(e) => setForm({ ...form, password: e.target.value })}
-            />
+                <h2>
+                    {isLogin ? "Login" : "Create Account"}
+                </h2>
 
-            <button className="loginbtn" onClick={handleSubmit}>
-                {isLogin ? "Login" : "Register"}
-            </button>
+                <input
+                    className="logininame"
+                    placeholder="Name"
+                    onChange={(e) =>
+                        setForm({
+                            ...form,
+                            name: e.target.value
+                        })
+                    }
+                />
 
-            <p>
-                {
-                    isLogin
-                    ? "No account?"
-                    : "Already have account?"
-                }
-            </p>
+                <input
+                    className="loginpassword"
+                    type="password"
+                    placeholder="Password"
+                    onChange={(e) =>
+                        setForm({
+                            ...form,
+                            password: e.target.value
+                        })
+                    }
+                />
 
-            <button className="createbtn" onClick={() => setIsLogin(!isLogin)}>
-                {
-                    isLogin
-                    ? "Create Account"
-                    : "Login"
-                }
-            </button>
-        </div>
+                <button
+                    className="loginbtn"
+                    onClick={handleSubmit}
+                >
+                    {isLogin ? "Login" : "Register"}
+                </button>
+
+                <p>
+                    {
+                        isLogin
+                            ? "No account?"
+                            : "Already have account?"
+                    }
+                </p>
+
+                <button
+                    className="createbtn"
+                    onClick={() => setIsLogin(!isLogin)}
+                >
+                    {
+                        isLogin
+                            ? "Create Account"
+                            : "Login"
+                    }
+                </button>
+
+            </div>
         </>
-    )
+    );
 }
 
-export default Login
+export default Login;

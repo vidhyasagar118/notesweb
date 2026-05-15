@@ -5,7 +5,7 @@ import SubjectCard from "../components/SubjectCard";
 import "./Dashboard.css"
 function Dashboard() {
 
-    const user = JSON.parse(localStorage.getItem("user")) || {};
+const user = JSON.parse(sessionStorage.getItem("user")) || {};
     const [subject, setSubject] = useState("");
     const [file, setFile] = useState(null);
     const [files, setFiles] = useState({});

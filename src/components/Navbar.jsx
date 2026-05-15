@@ -1,7 +1,19 @@
-import "./navbar.css"
+import "./navbar.css";
+import { useNavigate } from "react-router-dom";
+
 function Navbar({ user }) {
 
+    const navigate = useNavigate();
+
+    const logout = () => {
+sessionStorage.removeItem("token");
+sessionStorage.removeItem("user");
+
+        navigate("/");
+    };
+
     return (
+
         <div className="navbar">
 
             <h2 className="navhead">
@@ -9,17 +21,23 @@ function Navbar({ user }) {
             </h2>
 
             <div className="userinfo">
-                <p className="usernameshow">
-User: {user?.name}
 
+                <p className="usernameshow">
+                    User: {user?.name}
                 </p>
 
                 <p className="groupcodeshow">
-Group Code: {user?.groupCode}                </p>
+                    Group Code: {user?.groupCode}
+                </p>
+
+                <button onClick={logout}>
+                    Logout
+                </button>
+
             </div>
 
         </div>
-    )
+    );
 }
 
-export default Navbar
+export default Navbar;
