@@ -1,5 +1,6 @@
 import { useState } from "react";
 import API from "../api";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css"
 function Login() {
@@ -13,6 +14,13 @@ function Login() {
         password: ""
     });
 
+    useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+        navigate("/dashboard");
+    }
+}, []);
     const handleSubmit = async () => {
 
         try {

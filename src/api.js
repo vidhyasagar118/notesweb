@@ -1,18 +1,18 @@
 import axios from "axios";
 
 const API = axios.create({
-    baseURL: "https://notesweb-backend-9yi6.onrender.com/api"
+  baseURL: "https://notesweb-backend-9yi6.onrender.com/api",
 });
 
-API.interceptors.request.use((req) => {
+// 🔥 Auto attach token
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
 
-    const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
 
-    if (token) {
-        req.headers.Authorization = token;
-    }
-
-    return req;
+  return config;
 });
 
 export default API;
