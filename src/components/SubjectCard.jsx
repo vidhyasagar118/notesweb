@@ -1,3 +1,4 @@
+import "./SubjectCard.css"
 function SubjectCard({ subject, files, deleteFile }) {
 
     return (
