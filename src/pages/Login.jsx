@@ -14,13 +14,22 @@ function Login() {
         password: ""
     });
 
-    useEffect(() => {
+   
+useEffect(() => {
     const token = localStorage.getItem("token");
 
     if (token) {
-        navigate("/dashboard");
+        API.get("/auth/verify")
+            .then(() => {
+                navigate("/dashboard");
+            })
+            .catch(() => {
+                localStorage.clear();
+            });
     }
-}, []);
+}, []); 
+
+
     const handleSubmit = async () => {
 
         try {

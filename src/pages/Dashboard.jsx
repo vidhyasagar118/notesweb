@@ -135,11 +135,12 @@ function Dashboard() {
 
                     {
                         Object.keys(files).map((subject) => (
-                            <SubjectCard
-                                key={subject}
-                                subject={subject}
-                                files={files[subject]}
-                            />
+<SubjectCard
+    key={subject}
+    subject={subject}
+    files={files[subject]}
+    deleteFile={deleteFile}   // 🔥 ADD THIS
+/>
                         ))
                     }
 
@@ -156,7 +157,7 @@ function Dashboard() {
                                         <SubjectCard
                                             key={subject}
                                             subject={subject}
-                                            files={files[subject]}
+files={sharedFiles.grouped[subject]}
                                             deleteFile={deleteFile}
                                         />
                                     ))

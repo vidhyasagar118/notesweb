@@ -1,54 +1,39 @@
-import "./subjectcard.css"
-function SubjectCard({ subject, files, deleteFile }){
+function SubjectCard({ subject, files, deleteFile }) {
 
     return (
-        <div className="subjectbox">
+        <div>
 
-            <h2 className="subjectheading">
-                {subject}
-            </h2>
+            <h2>{subject}</h2>
 
-            {
-                files.map((file) => (
-                    <div className="fileitem" key={file._id}>
+            {files.map(file => (
 
-                        <span className="filename">
-                            {file.filename}
-                        </span>
+                <div key={file._id}>
 
-                        <div className="filebtnbox">
+                    <span>{file.filename}</span>
 
-                            <a
-                               href={`https://notesweb-backend-9yi6.onrender.com/${file.filepath}`}
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                <button className="viewbtn">
-                                    View
-                                </button>
-                            </a>
+                    <a
+                        href={`https://notesweb-backend-9yi6.onrender.com/${file.filepath}`}
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <button>View</button>
+                    </a>
 
-                            <a
-href={`https://notesweb-backend-9yi6.onrender.com/${file.filepath}`}                                download
-                            >
-                                <button className="downloadbtn">
-                                    Download
-                                </button>
-                            </a>
-                            <button
-    className="deletebtn"
-    onClick={() => deleteFile(file._id)}
->
-    Delete
-</button>
+                    <a
+                        href={`https://notesweb-backend-9yi6.onrender.com/${file.filepath}`}
+                        download
+                    >
+                        <button>Download</button>
+                    </a>
 
-                        </div>
-                    </div>
-                ))
-            }
+                    <button onClick={() => deleteFile(file._id)}>
+                        Delete
+                    </button>
 
+                </div>
+            ))}
         </div>
-    )
+    );
 }
 
-export default SubjectCard
+export default SubjectCard;

@@ -4,8 +4,8 @@ const API = axios.create({
   baseURL: "https://notesweb-backend-9yi6.onrender.com/api",
 });
 
-// 🔥 Auto attach token
 API.interceptors.request.use((config) => {
+
   const token = localStorage.getItem("token");
 
   if (token) {
