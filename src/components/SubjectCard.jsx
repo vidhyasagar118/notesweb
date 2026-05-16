@@ -2,13 +2,6 @@ import "./subjectcard.css";
 
 function SubjectCard({ files, deleteFile }) {
 
-    const getFileUrl = (filepath) => {
-
-        if (!filepath) return "#";
-
-        return filepath;
-    };
-
     return (
 
         <div className="filesGrid">
@@ -35,7 +28,7 @@ function SubjectCard({ files, deleteFile }) {
                         <div className="fileButtons">
 
                             <a
-                                href={getFileUrl(file.filepath)}
+                                href={file.filepath}
                                 target="_blank"
                                 rel="noreferrer"
                             >
@@ -45,8 +38,7 @@ function SubjectCard({ files, deleteFile }) {
                             </a>
 
                             <a
-                                href={getFileUrl(file.filepath)}
-                                download={file.filename}
+                                href={file.downloadUrl}
                             >
                                 <button className="downloadButton">
                                     Download
