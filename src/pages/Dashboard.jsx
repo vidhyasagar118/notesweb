@@ -113,21 +113,7 @@ const user = JSON.parse(sessionStorage.getItem("user")) || {};
                         Upload
                     </button>
 
-                    <hr />
-
-                    <h2 className="opensareheading">Open Shared Files</h2>
-
-                    <input
-                        className="gropinp"
-                        type="text"
-                        placeholder="Enter Group Code"
-                        value={groupCode}
-                        onChange={(e) => setGroupCode(e.target.value)}
-                    />
-
-                    <button className="opengroupbtn" onClick={openShared}>
-                        Open
-                    </button>
+                
 
                     <hr />
 
@@ -143,6 +129,21 @@ const user = JSON.parse(sessionStorage.getItem("user")) || {};
 />
                         ))
                     }
+                        <hr />
+
+                    <h2 className="opensareheading">Open Shared Files</h2>
+
+                    <input
+                        className="gropinp"
+                        type="text"
+                        placeholder="Enter Group Code"
+                        value={groupCode}
+                        onChange={(e) => setGroupCode(e.target.value)}
+                    />
+
+                    <button className="opengroupbtn" onClick={openShared}>
+                        Open
+                    </button>
 
                     {
                         sharedFiles && (
