@@ -7,7 +7,7 @@ function Dashboard() {
 
 const user = JSON.parse(sessionStorage.getItem("user")) || {};
     const [subject, setSubject] = useState("");
-    const [file, setFile] = useState(null);
+const [filesToUpload, setFilesToUpload] = useState([]);
     const [files, setFiles] = useState({});
 
     const [groupCode, setGroupCode] = useState("");
@@ -29,30 +29,36 @@ const user = JSON.parse(sessionStorage.getItem("user")) || {};
         loadFiles();
     }, []);
 
-    const uploadFile = async () => {
+const uploadFile = async () => {
 
-        if (!subject || !file) {
-            return alert("Please enter subject and select file");
-        }
+    if (!subject || filesToUpload.length === 0) {
+        return alert("Please select files");
+    }
 
-        const formData = new FormData();
+    const formData = new FormData();
 
-        formData.append("subject", subject);
-        formData.append("file", file);
+    formData.append("subject", subject);
 
-        try {
+    for (let i = 0; i < filesToUpload.length; i++) {
+        formData.append("files", filesToUpload[i]);
+    }
 
-            await API.post("/files/upload", formData);
+    try {
 
-            alert("File Uploaded");
+        await API.post("/files/upload", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        });
 
-            loadFiles();
+        alert("Files Uploaded");
 
-        } catch (err) {
-            console.log(err);
-        }
-    };
+        loadFiles();
 
+    } catch (err) {
+        console.log(err);
+    }
+};
     const openShared = async () => {
 
         try {
@@ -103,11 +109,12 @@ const user = JSON.parse(sessionStorage.getItem("user")) || {};
                         onChange={(e) => setSubject(e.target.value)}
                     />
 
-                    <input
-                        className="fileuploadinp"
-                        type="file"
-                        onChange={(e) => setFile(e.target.files[0])}
-                    />
+                  <input
+    className="fileuploadinp"
+    type="file"
+    multiple
+    onChange={(e) => setFilesToUpload(e.target.files)}
+/>
 
                     <button onClick={uploadFile} className="uploadbtn">
                         Upload
@@ -125,7 +132,7 @@ const user = JSON.parse(sessionStorage.getItem("user")) || {};
     key={subject}
     subject={subject}
     files={files[subject]}
-    deleteFile={deleteFile}   // 🔥 ADD THIS
+    deleteFile={deleteFile}   
 />
                         ))
                     }
