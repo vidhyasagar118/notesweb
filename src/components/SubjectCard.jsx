@@ -1,5 +1,3 @@
-// src/components/SubjectCard.jsx
-
 import "./subjectcard.css";
 
 function SubjectCard({ files, deleteFile }) {
@@ -30,7 +28,7 @@ function SubjectCard({ files, deleteFile }) {
                         <div className="fileButtons">
 
                             <a
-                                href={`https://notesweb-backend-9yi6.onrender.com/${file.filepath}`}
+                                href={file.filepath}
                                 target="_blank"
                                 rel="noreferrer"
                             >
@@ -40,7 +38,7 @@ function SubjectCard({ files, deleteFile }) {
                             </a>
 
                             <a
-                                href={`https://notesweb-backend-9yi6.onrender.com/${file.filepath}`}
+                                href={file.filepath}
                                 download
                             >
                                 <button className="downloadButton">
@@ -48,12 +46,16 @@ function SubjectCard({ files, deleteFile }) {
                                 </button>
                             </a>
 
-                            <button
-                                className="deleteButton"
-                                onClick={() => deleteFile(file._id)}
-                            >
-                                Delete
-                            </button>
+                            {
+                                deleteFile && (
+                                    <button
+                                        className="deleteButton"
+                                        onClick={() => deleteFile(file._id)}
+                                    >
+                                        Delete
+                                    </button>
+                                )
+                            }
 
                         </div>
 
