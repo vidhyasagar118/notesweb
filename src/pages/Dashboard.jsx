@@ -148,7 +148,13 @@ function Dashboard() {
                         <option value="Semester 6">
                             Semester 6
                         </option>
-
+                        <option value="Semester 7">
+                            Semester 7
+                        </option>
+                        <option value="Semester 8">
+                            Semester 8
+                        </option>
+                       
                     </select>
 
                     <input
