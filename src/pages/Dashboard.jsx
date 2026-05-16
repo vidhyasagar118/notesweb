@@ -40,46 +40,56 @@ function Dashboard() {
 
     }, []);
 
-    const uploadFile = async () => {
+const uploadFile = async () => {
 
-        if (!semester || !subject || filesToUpload.length === 0) {
+    if (!semester || !subject || filesToUpload.length === 0) {
 
-            return alert("Please fill all fields");
-        }
+        return alert("Please fill all fields");
+    }
 
-        const formData = new FormData();
+    const formData = new FormData();
 
-        formData.append("semester", semester);
+    formData.append("semester", semester);
 
-        formData.append("subject", subject);
+    formData.append("subject", subject);
 
-        for (let i = 0; i < filesToUpload.length; i++) {
+    filesToUpload.forEach((file) => {
 
-            formData.append("files", filesToUpload[i]);
-        }
+        formData.append("files", file);
+    });
 
-        try {
+    try {
 
-            await API.post("/files/upload", formData, {
+        await API.post(
+            "/files/upload",
+            formData,
+            {
                 headers: {
                     "Content-Type": "multipart/form-data"
-                }
-            });
+                },
 
-            alert("Files Uploaded");
+                timeout: 1000 * 60 * 5
+            }
+        );
 
-            setSemester("");
-            setSubject("");
-            setFilesToUpload([]);
+        alert("Files Uploaded");
 
-            loadFiles();
+        setSemester("");
+        setSubject("");
+        setFilesToUpload([]);
 
-        } catch (err) {
+        loadFiles();
 
-            console.log(err);
-        }
-    };
+    } catch (err) {
 
+        console.log(err);
+
+        alert(
+            err.response?.data?.message ||
+            "Upload failed"
+        );
+    }
+};
     const openShared = async () => {
 
         try {
