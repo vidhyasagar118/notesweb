@@ -1,137 +1,173 @@
-/* Subject Card */
+/* src/components/SubjectCard.css */
 
-.subjectbox {
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(12px);
-    border-radius: 22px;
-    padding: 25px;
-    margin-top: 25px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-    transition: 0.3s;
-    animation: cardFade 0.7s ease;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.subjectbox:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.35);
+/* GRID */
+
+.filesGrid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
 }
 
-/* Subject Heading */
+/* FILE CARD */
 
-.subjectheading {
-    font-size: 28px;
-    margin-bottom: 20px;
-    color: #60a5fa;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding-bottom: 10px;
+.fileCard{
+    background: white;
+    border-radius: 26px;
+    padding: 28px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+
+    transition: 0.4s ease;
+
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+
+    position: relative;
+    overflow: hidden;
 }
 
-/* File Item */
+/* GLOW EFFECT */
 
-.fileitem {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.365);
-    padding: 15px;
-    border-radius: 14px;
-    margin-top: 14px;
-    transition: 0.3s;
-        border: 2px solid black;
+.fileCard::before{
+    content: "";
 
+    position: absolute;
+
+    width: 160px;
+    height: 160px;
+
+    background: rgba(37,99,235,0.08);
+
+    border-radius: 50%;
+
+    top: -60px;
+    right: -60px;
+
+    transition: 0.4s;
 }
 
-.fileitem:hover {
-    background: rgba(255,255,255,0.12);
-    transform: scale(1.01);
+.fileCard:hover::before{
+    transform: scale(1.4);
 }
 
-/* File Name */
+/* HOVER */
 
-.filename {
-    color:black;
-    font-size: 15px;
-    font-weight: 500;
+.fileCard:hover{
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 18px 35px rgba(37,99,235,0.18);
+}
+
+/* FILE NAME */
+
+.fileTop{
+    position: relative;
+    z-index: 2;
+}
+
+.fileName{
+    font-size: 24px;
+    font-weight: bold;
+    color: #111827;
+    margin-bottom: 28px;
     word-break: break-word;
+    line-height: 1.4;
 }
 
-/* Button Box */
+/* BUTTONS */
 
-.filebtnbox {
+.fileButtons{
     display: flex;
-    gap: 12px;
+    flex-wrap: wrap;
+    gap: 14px;
+    position: relative;
+    z-index: 2;
 }
 
-/* View Button */
+/* COMMON BUTTON */
 
-.viewbtn {
-    padding: 10px 18px;
+.viewButton,
+.downloadButton,
+.deleteButton{
     border: none;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    padding: 12px 20px;
+    border-radius: 12px;
     color: white;
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
-    font-weight: bold;
 }
 
-.viewbtn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(37,99,235,0.4);
+/* BUTTON COLORS */
+
+.viewButton{
+    background: #2563eb;
 }
 
-/* Download Button */
-
-.downloadbtn {
-    padding: 10px 18px;
-    border: none;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #059669, #10b981);
-    color: white;
-    font-size: 14px;
-    cursor: pointer;
-    transition: 0.3s;
-    font-weight: bold;
+.downloadButton{
+    background: #059669;
 }
 
-.downloadbtn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(16,185,129,0.4);
+.deleteButton{
+    background: #dc2626;
 }
 
-/* Animation */
+/* HOVER */
 
-@keyframes cardFade {
+.viewButton:hover,
+.downloadButton:hover,
+.deleteButton:hover{
+    transform: scale(1.05);
+}
 
-    from {
+/* ANIMATION */
+
+@keyframes fadeUp{
+
+    from{
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(35px);
     }
 
-    to {
+    to{
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* Responsive */
+/* TABLET */
 
-@media (max-width: 768px) {
+@media(max-width: 900px){
 
-    .fileitem {
+    .filesGrid{
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+/* MOBILE */
+
+@media(max-width: 500px){
+
+    .fileCard{
+        padding: 22px;
+    }
+
+    .fileName{
+        font-size: 20px;
+    }
+
+    .fileButtons{
         flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
     }
 
-    .filebtnbox {
-        width: 100%;
-        justify-content: flex-start;
-    }
-
-    .viewbtn,
-    .downloadbtn {
+    .viewButton,
+    .downloadButton,
+    .deleteButton{
         width: 100%;
     }
 }

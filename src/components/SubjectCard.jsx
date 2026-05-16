@@ -1,34 +1,40 @@
+// src/components/SubjectCard.jsx
+
 import "./subjectcard.css";
 
-function SubjectCard({ subject, files, deleteFile }) {
+function SubjectCard({ files, deleteFile }) {
 
     return (
 
-        <div className="subjectbox">
-
-            <h2 className="subjectheading">
-                {subject}
-            </h2>
+        <div className="filesGrid">
 
             {
-Array.isArray(files) && files.map((file) => (
+                Array.isArray(files) && files.map((file, index) => (
+
                     <div
                         key={file._id}
-                        className="fileitem"
+                        className="fileCard"
+                        style={{
+                            animationDelay: `${index * 0.08}s`
+                        }}
                     >
 
-                        <span className="filename">
-                            {file.filename}
-                        </span>
+                        <div className="fileTop">
 
-                        <div className="filebtnbox">
+                            <h2 className="fileName">
+                                {file.filename}
+                            </h2>
+
+                        </div>
+
+                        <div className="fileButtons">
 
                             <a
                                 href={`https://notesweb-backend-9yi6.onrender.com/${file.filepath}`}
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                <button className="viewbtn">
+                                <button className="viewButton">
                                     View
                                 </button>
                             </a>
@@ -37,13 +43,13 @@ Array.isArray(files) && files.map((file) => (
                                 href={`https://notesweb-backend-9yi6.onrender.com/${file.filepath}`}
                                 download
                             >
-                                <button className="downloadbtn">
+                                <button className="downloadButton">
                                     Download
                                 </button>
                             </a>
 
                             <button
-                                className="deletebtn"
+                                className="deleteButton"
                                 onClick={() => deleteFile(file._id)}
                             >
                                 Delete
