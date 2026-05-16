@@ -6,6 +6,7 @@ import "./Dashboard.css"
 function Dashboard() {
 
 const user = JSON.parse(sessionStorage.getItem("user")) || {};
+const [semester, setSemester] = useState("");
     const [subject, setSubject] = useState("");
 const [filesToUpload, setFilesToUpload] = useState([]);
     const [files, setFiles] = useState({});
@@ -28,14 +29,15 @@ const [filesToUpload, setFilesToUpload] = useState([]);
     useEffect(() => {
         loadFiles();
     }, []);
-
 const uploadFile = async () => {
 
-    if (!subject || filesToUpload.length === 0) {
-        return alert("Please select files");
+    if (!semester || !subject || filesToUpload.length === 0) {
+        return alert("Please fill all fields");
     }
 
     const formData = new FormData();
+
+    formData.append("semester", semester);
 
     formData.append("subject", subject);
 
@@ -56,6 +58,7 @@ const uploadFile = async () => {
         loadFiles();
 
     } catch (err) {
+
         console.log(err);
     }
 };
@@ -99,17 +102,55 @@ const uploadFile = async () => {
 
                 <div className="dashcontainer">
 
-                    <h2 className="uploadfile ">Upload File</h2>
+<h2 className="uploadfile">
+    Upload File
+</h2>
 
-                    <input
-                        className="subjectinp"
-                        type="text"
-                        placeholder="Enter Subject"
-                        value={subject}
-                        onChange={(e) => setSubject(e.target.value)}
-                    />
+<select
+    className="semesterselect"
+    value={semester}
+    onChange={(e) => setSemester(e.target.value)}
+>
 
-                  <input
+    <option value="">
+        Select Semester
+    </option>
+
+    <option value="Semester 1">
+        Semester 1
+    </option>
+
+    <option value="Semester 2">
+        Semester 2
+    </option>
+
+    <option value="Semester 3">
+        Semester 3
+    </option>
+
+    <option value="Semester 4">
+        Semester 4
+    </option>
+
+    <option value="Semester 5">
+        Semester 5
+    </option>
+
+    <option value="Semester 6">
+        Semester 6
+    </option>
+
+</select>
+
+<input
+    className="subjectinp"
+    type="text"
+    placeholder="Enter Subject"
+    value={subject}
+    onChange={(e) => setSubject(e.target.value)}
+/>
+
+<input
     className="fileuploadinp"
     type="file"
     multiple
@@ -126,16 +167,33 @@ const uploadFile = async () => {
 
                     <h2 className="mysubjects">My Subjects</h2>
 
-                    {
-                        Object.keys(files).map((subject) => (
-<SubjectCard
-    key={subject}
-    subject={subject}
-    files={files[subject]}
-    deleteFile={deleteFile}   
-/>
-                        ))
-                    }
+                  {
+    Object.keys(files).map((semester) => (
+
+        <div
+            key={semester}
+            className="semesterbox"
+        >
+
+            <h1 className="semesterheading">
+                {semester}
+            </h1>
+
+            {
+                Object.keys(files[semester]).map((subject) => (
+
+                    <SubjectCard
+                        key={subject}
+                        subject={subject}
+                        files={files[semester][subject]}
+                        deleteFile={deleteFile}
+                    />
+                ))
+            }
+
+        </div>
+    ))
+}
                         <hr />
 
                     <h2 className="opensareheading">Open Shared Files</h2>
@@ -160,16 +218,33 @@ const uploadFile = async () => {
                                     Shared By: {sharedFiles.owner}
                                 </h2>
 
-                                {
-                                    Object.keys(sharedFiles.grouped).map((subject) => (
-                                        <SubjectCard
-                                            key={subject}
-                                            subject={subject}
-files={sharedFiles.grouped[subject]}
-                                            deleteFile={deleteFile}
-                                        />
-                                    ))
-                                }
+                               {
+    Object.keys(sharedFiles.grouped).map((semester) => (
+
+        <div
+            key={semester}
+            className="semesterbox"
+        >
+
+            <h1 className="semesterheading">
+                {semester}
+            </h1>
+
+            {
+                Object.keys(sharedFiles.grouped[semester]).map((subject) => (
+
+                    <SubjectCard
+                        key={subject}
+                        subject={subject}
+                        files={sharedFiles.grouped[semester][subject]}
+                        deleteFile={deleteFile}
+                    />
+                ))
+            }
+
+        </div>
+    ))
+}
 
                             </div>
                         )

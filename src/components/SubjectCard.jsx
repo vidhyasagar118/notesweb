@@ -11,8 +11,7 @@ function SubjectCard({ subject, files, deleteFile }) {
             </h2>
 
             {
-                files.map((file) => (
-
+Array.isArray(files) && files.map((file) => (
                     <div
                         key={file._id}
                         className="fileitem"
