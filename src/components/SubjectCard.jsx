@@ -6,9 +6,7 @@ function SubjectCard({ files, deleteFile }) {
 
         if (!filepath) return "#";
 
-        return filepath.startsWith("http")
-            ? filepath
-            : `https://notesweb-backend-9yi6.onrender.com/${filepath}`;
+        return filepath;
     };
 
     return (
@@ -48,7 +46,7 @@ function SubjectCard({ files, deleteFile }) {
 
                             <a
                                 href={getFileUrl(file.filepath)}
-                                download
+                                download={file.filename}
                             >
                                 <button className="downloadButton">
                                     Download
