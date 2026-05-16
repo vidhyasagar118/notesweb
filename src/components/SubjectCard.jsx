@@ -1,3 +1,5 @@
+import "./subjectcard.css";
+
 function SubjectCard({ subject, files, deleteFile }) {
 
     return (
@@ -57,3 +59,5 @@ function SubjectCard({ subject, files, deleteFile }) {
         </div>
     );
 }
+
+export default SubjectCard;
