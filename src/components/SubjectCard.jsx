@@ -2,6 +2,15 @@ import "./subjectcard.css";
 
 function SubjectCard({ files, deleteFile }) {
 
+    const getFileUrl = (filepath) => {
+
+        if (!filepath) return "#";
+
+        return filepath.startsWith("http")
+            ? filepath
+            : `https://notesweb-backend-9yi6.onrender.com/${filepath}`;
+    };
+
     return (
 
         <div className="filesGrid">
@@ -28,7 +37,7 @@ function SubjectCard({ files, deleteFile }) {
                         <div className="fileButtons">
 
                             <a
-                                href={file.filepath}
+                                href={getFileUrl(file.filepath)}
                                 target="_blank"
                                 rel="noreferrer"
                             >
@@ -38,7 +47,7 @@ function SubjectCard({ files, deleteFile }) {
                             </a>
 
                             <a
-                                href={file.filepath}
+                                href={getFileUrl(file.filepath)}
                                 download
                             >
                                 <button className="downloadButton">
