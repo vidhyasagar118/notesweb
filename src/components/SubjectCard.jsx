@@ -26,7 +26,6 @@ function SubjectCard({ files, deleteFile }) {
                         </div>
 
                         <div className="fileButtons">
-
                             <a
                                 href={file.filepath}
                                 target="_blank"
