@@ -1,14 +1,28 @@
+/* Login.css */
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Body */
+/* MAIN PAGE */
 
-body{
+.loginPageMain{
 
-    font-family: Arial, sans-serif;
+    min-height: 100vh;
+
+    width: 100%;
+
+    overflow-x: hidden;
+
+    position: relative;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
 
     background: linear-gradient(
         135deg,
@@ -16,20 +30,16 @@ body{
         #1e293b
     );
 
-    min-height: 100vh;
-
-    overflow-x: hidden;
-
-    position: relative;
+    font-family: Arial, sans-serif;
 }
 
-/* Logo Heading */
+/* LOGO */
 
-.mainlogo{
+.loginPageLogo{
 
     position: absolute;
 
-    top: 40px;
+    top: 30px;
 
     left: 50%;
 
@@ -56,24 +66,16 @@ body{
 
     text-shadow: 0px 0px 25px rgba(59,130,246,0.5);
 
-    animation: glowLogo 2s infinite alternate;
+    animation: loginLogoGlow 2s infinite alternate;
 }
 
-/* Login Box */
+/* CARD */
 
-.login-box {
-
-    position: absolute;
-
-    top: 58%;
-
-    left: 50%;
-
-    transform: translate(-50%, -50%);
-
+.loginCard{
+margin-top: 70px;
     width: 400px;
 
-    padding: 40px;
+    padding: 30px;
 
     border-radius: 25px;
 
@@ -83,12 +85,12 @@ body{
 
     box-shadow: 0 10px 35px rgba(0,0,0,0.45);
 
-    animation: fadeIn 1s ease;
+    animation: loginFade 1s ease;
 }
 
-/* Login Heading */
+/* TITLE */
 
-.login-box h2 {
+.loginTitle{
 
     text-align: center;
 
@@ -101,10 +103,10 @@ body{
     font-weight: 700;
 }
 
-/* Inputs */
+/* INPUTS */
 
-.logininame,
-.loginpassword {
+.loginInputName,
+.loginInputPassword{
 
     width: 100%;
 
@@ -127,18 +129,18 @@ body{
     transition: 0.3s;
 }
 
-/* Placeholder */
+/* PLACEHOLDER */
 
-.logininame::placeholder,
-.loginpassword::placeholder{
+.loginInputName::placeholder,
+.loginInputPassword::placeholder{
 
     color: #d1d5db;
 }
 
-/* Input Focus */
+/* INPUT FOCUS */
 
-.logininame:focus,
-.loginpassword:focus{
+.loginInputName:focus,
+.loginInputPassword:focus{
 
     border: 1px solid #3b82f6;
 
@@ -147,9 +149,9 @@ body{
     transform: scale(1.02);
 }
 
-/* Main Button */
+/* LOGIN BUTTON */
 
-.loginbtn {
+.loginMainButton{
 
     width: 100%;
 
@@ -178,18 +180,16 @@ body{
     transition: 0.3s;
 }
 
-/* Button Hover */
-
-.loginbtn:hover {
+.loginMainButton:hover{
 
     transform: translateY(-3px);
 
     box-shadow: 0px 12px 22px rgba(37,99,235,0.45);
 }
 
-/* Text */
+/* BOTTOM TEXT */
 
-.login-box p {
+.loginBottomText{
 
     text-align: center;
 
@@ -200,9 +200,9 @@ body{
     font-size: 18px;
 }
 
-/* Create Button */
+/* SWITCH BUTTON */
 
-.createbtn {
+.switchAuthButton{
 
     width: 100%;
 
@@ -225,9 +225,7 @@ body{
     transition: 0.3s;
 }
 
-/* Create Hover */
-
-.createbtn:hover {
+.switchAuthButton:hover{
 
     background: rgba(255,255,255,0.08);
 
@@ -236,64 +234,62 @@ body{
     transform: translateY(-2px);
 }
 
-/* Fade Animation */
+/* ANIMATIONS */
 
-@keyframes fadeIn {
+@keyframes loginFade{
 
     from{
 
         opacity: 0;
 
-        transform: translate(-50%, -40%);
+        transform: translateY(40px);
     }
 
     to{
 
         opacity: 1;
 
-        transform: translate(-50%, -50%);
+        transform: translateY(0px);
     }
 }
 
-/* Glow Animation */
-
-@keyframes glowLogo{
+@keyframes loginLogoGlow{
 
     from{
+
         filter: drop-shadow(0px 0px 8px #2563eb);
     }
 
     to{
+
         filter: drop-shadow(0px 0px 22px #60a5fa);
     }
 }
 
-/* Responsive */
+/* RESPONSIVE */
 
 @media(max-width:600px){
 
-    .mainlogo{
+    .loginPageLogo{
 
         font-size: 42px;
 
         top: 30px;
     }
 
-    .login-box{
-
+    .loginCard{
+margin-top: 0px;
         width: 90%;
 
         padding: 30px;
-
-        top: 55%;
     }
 
-    .login-box h2{
+    .loginTitle{
 
         font-size: 32px;
     }
 
-    .loginbtn{
+    .loginMainButton{
 
         font-size: 18px;
     }

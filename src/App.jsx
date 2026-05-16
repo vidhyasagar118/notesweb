@@ -11,7 +11,8 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import SubjectsPage from "./pages/SubjectsPage";
 import SubjectFiles from "./pages/SubjectFiles";
-
+import SharedSubjectsPage from "./pages/SharedSubjectsPage";
+import SharedSubjectFiles from "./pages/SharedSubjectFiles";
 function ProtectedRoute({ children }) {
 
     const token = sessionStorage.getItem("token");
@@ -58,7 +59,23 @@ function App() {
                         </ProtectedRoute>
                     }
                 />
+<Route
+    path="/sharedsubjects/:groupCode/:semester"
+    element={
+        <ProtectedRoute>
+            <SharedSubjectsPage />
+        </ProtectedRoute>
+    }
+/>
 
+<Route
+    path="/sharedfiles/:groupCode/:semester/:subject"
+    element={
+        <ProtectedRoute>
+            <SharedSubjectFiles />
+        </ProtectedRoute>
+    }
+/>
             </Routes>
 
         </BrowserRouter>

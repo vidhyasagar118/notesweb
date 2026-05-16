@@ -258,7 +258,7 @@ function Dashboard() {
 
         <Link
             key={semester}
-            to={`/subjects/${semester}`}
+            to={`/sharedsubjects/${groupCode}/${semester}`}
             className="semesterlink"
         >
 
@@ -269,7 +269,9 @@ function Dashboard() {
                     <h1 className="semesterheading">
                         {semester}
                     </h1>
-                   <p>click</p>
+
+                    <p>click</p>
+
                 </div>
 
             </div>
@@ -277,7 +279,6 @@ function Dashboard() {
         </Link>
     ))
 }
-
 </div>
                             </div>
                         )

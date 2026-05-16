@@ -1,3 +1,5 @@
+// Login.jsx
+
 import { useState, useEffect } from "react";
 import API from "../api";
 import { useNavigate } from "react-router-dom";
@@ -16,8 +18,10 @@ function Login() {
 
     useEffect(() => {
 
-const token = sessionStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
+
         if (token) {
+
             navigate("/dashboard");
         }
 
@@ -31,12 +35,16 @@ const token = sessionStorage.getItem("token");
 
                 const res = await API.post("/auth/login", form);
 
-               sessionStorage.setItem("token", res.data.token);
+                sessionStorage.setItem(
+                    "token",
+                    res.data.token
+                );
 
-sessionStorage.setItem(
-    "user",
-    JSON.stringify(res.data.user)
-);
+                sessionStorage.setItem(
+                    "user",
+                    JSON.stringify(res.data.user)
+                );
+
                 navigate("/dashboard");
 
             } else {
@@ -58,19 +66,27 @@ sessionStorage.setItem(
     };
 
     return (
-        <>
-            <h1 className="mainlogo">
+
+        <div className="loginPageMain">
+
+            <h1 className="loginPageLogo">
                 notes.com
             </h1>
 
-            <div className="login-box">
+            <div className="loginCard">
 
-                <h2>
-                    {isLogin ? "Login" : "Create Account"}
+                <h2 className="loginTitle">
+
+                    {
+                        isLogin
+                        ? "Login"
+                        : "Create Account"
+                    }
+
                 </h2>
 
                 <input
-                    className="logininame"
+                    className="loginInputName"
                     placeholder="Name"
                     onChange={(e) =>
                         setForm({
@@ -81,7 +97,7 @@ sessionStorage.setItem(
                 />
 
                 <input
-                    className="loginpassword"
+                    className="loginInputPassword"
                     type="password"
                     placeholder="Password"
                     onChange={(e) =>
@@ -93,33 +109,46 @@ sessionStorage.setItem(
                 />
 
                 <button
-                    className="loginbtn"
+                    className="loginMainButton"
                     onClick={handleSubmit}
                 >
-                    {isLogin ? "Login" : "Register"}
-                </button>
 
-                <p>
                     {
                         isLogin
-                            ? "No account?"
-                            : "Already have account?"
+                        ? "Login"
+                        : "Register"
                     }
+
+                </button>
+
+                <p className="loginBottomText">
+
+                    {
+                        isLogin
+                        ? "No account?"
+                        : "Already have account?"
+                    }
+
                 </p>
 
                 <button
-                    className="createbtn"
-                    onClick={() => setIsLogin(!isLogin)}
+                    className="switchAuthButton"
+                    onClick={() =>
+                        setIsLogin(!isLogin)
+                    }
                 >
+
                     {
                         isLogin
-                            ? "Create Account"
-                            : "Login"
+                        ? "Create Account"
+                        : "Login"
                     }
+
                 </button>
 
             </div>
-        </>
+
+        </div>
     );
 }
 
