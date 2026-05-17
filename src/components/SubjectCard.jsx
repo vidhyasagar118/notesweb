@@ -13,22 +13,27 @@ function SubjectCard({ files, deleteFile }) {
 
                     <div className="fileButtons">
 
-                        {/* VIEW */}
+                        {/* ✅ VIEW (FINAL FIX) */}
                         <button
-                            onClick={() => window.open(file.filepath, "_blank")}
+                            onClick={() =>
+                                window.open(
+                                    `https://docs.google.com/gview?url=${file.filepath}&embedded=true`,
+                                    "_blank"
+                                )
+                            }
                             className="viewButton"
                         >
                             View
                         </button>
 
-                        {/* DOWNLOAD */}
-                        <a href={file.downloadUrl} download>
+                        {/* ✅ DOWNLOAD */}
+                        <a href={file.downloadUrl}>
                             <button className="downloadButton">
                                 Download
                             </button>
                         </a>
 
-                        {/* DELETE */}
+                        {/* ✅ DELETE */}
                         {deleteFile && (
                             <button
                                 className="deleteButton"
@@ -45,3 +50,4 @@ function SubjectCard({ files, deleteFile }) {
 }
 
 export default SubjectCard;
+
