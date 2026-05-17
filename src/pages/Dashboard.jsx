@@ -179,7 +179,7 @@ const uploadFile = async () => {
                         className="fileuploadinp"
                         type="file"
                         multiple
-                        onChange={(e) => setFilesToUpload(e.target.files)}
+                        onChange={(e) => setFilesToUpload(Array.from(e.target.files))}
                     />
 
                     <button
