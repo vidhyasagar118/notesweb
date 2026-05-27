@@ -1,130 +1,52 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Linking,
-  ScrollView,
-} from 'react-native';
+import "./subjectcard.css";
 
-const AddNoteScreen = ({ files, deleteFile }) => {
-
-  return (
-
-    <ScrollView style={styles.container}>
-
-      <View style={styles.grid}>
-
-        {
-          Array.isArray(files) && files.map((file, index) => (
-
-            <View key={file._id} style={styles.card}>
-
-              <Text style={styles.filename}>
-                {file.filename}
-              </Text>
-
-              <View style={styles.buttons}>
-
-                {/* VIEW */}
-                <TouchableOpacity
-                  style={styles.viewButton}
-                  onPress={() =>
-                    Linking.openURL(
-                      file.filepath + '#toolbar=0'
-                    )
-                  }
+function SubjectCard({ files, deleteFile }) {
+    return (
+        <div className="filesGrid">
+            {Array.isArray(files) && files.map((file, index) => (
+                <div
+                    key={file._id}
+                    className="fileCard"
+                    style={{ animationDelay: `${index * 0.08}s` }}
                 >
-                  <Text style={styles.btnText}>View</Text>
-                </TouchableOpacity>
+                    <h2>{file.filename}</h2>
 
-                {/* DOWNLOAD */}
-                <TouchableOpacity
-                  style={styles.downloadButton}
-                  onPress={() =>
-                    Linking.openURL(file.downloadUrl)
-                  }
-                >
-                  <Text style={styles.btnText}>Download</Text>
-                </TouchableOpacity>
+                    <div className="fileButtons">
 
-                {/* DELETE */}
-                {
-                  deleteFile && (
-                    <TouchableOpacity
-                      style={styles.deleteButton}
-                      onPress={() => deleteFile(file._id)}
-                    >
-                      <Text style={styles.btnText}>Delete</Text>
-                    </TouchableOpacity>
-                  )
-                }
+                        {/* ✅ FINAL VIEW FIX */}
+                        <button
+                            onClick={() =>
+                                window.open(
+                                    file.filepath + "#toolbar=0",
+                                    "_blank"
+                                )
+                            }
+                            className="viewButton"
+                        >
+                            View
+                        </button>
 
-              </View>
+                        {/* ✅ DOWNLOAD */}
+                        <a href={file.downloadUrl}>
+                            <button className="downloadButton">
+                                Download
+                            </button>
+                        </a>
 
-            </View>
-          ))
-        }
+                        {/* ✅ DELETE */}
+                        {deleteFile && (
+                            <button
+                                className="deleteButton"
+                                onClick={() => deleteFile(file._id)}
+                            >
+                                Delete
+                            </button>
+                        )}
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+}
 
-      </View>
-
-    </ScrollView>
-  );
-};
-
-export default AddNoteScreen;
-
-const styles = StyleSheet.create({
-
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-
-  grid: {
-    padding: 15,
-    gap: 15,
-  },
-
-  card: {
-    padding: 15,
-    borderRadius: 10,
-    backgroundColor: '#f5f5f5',
-  },
-
-  filename: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 10,
-  },
-
-  buttons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-
-  viewButton: {
-    backgroundColor: '#4CAF50',
-    padding: 8,
-    borderRadius: 5,
-  },
-
-  downloadButton: {
-    backgroundColor: '#2196F3',
-    padding: 8,
-    borderRadius: 5,
-  },
-
-  deleteButton: {
-    backgroundColor: '#f44336',
-    padding: 8,
-    borderRadius: 5,
-  },
-
-  btnText: {
-    color: '#fff',
-    fontSize: 14,
-  },
-
-});
+export default SubjectCard;
