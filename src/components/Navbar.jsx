@@ -6,9 +6,8 @@ function Navbar({ user }) {
     const navigate = useNavigate();
 
     const logout = () => {
-sessionStorage.removeItem("token");
-sessionStorage.removeItem("user");
-
+localStorage.removeItem("token");
+localStorage.removeItem("user");
         navigate("/");
     };
 

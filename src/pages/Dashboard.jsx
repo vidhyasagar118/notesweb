@@ -8,8 +8,7 @@ import "./Dashboard.css";
 
 function Dashboard() {
 
-    const user = JSON.parse(sessionStorage.getItem("user")) || {};
-
+const user = JSON.parse(localStorage.getItem("user")) || {};
     const [semester, setSemester] = useState("");
     const [subject, setSubject] = useState("");
 
@@ -34,6 +33,15 @@ function Dashboard() {
         }
     };
 
+    useEffect(() => {
+
+    const token = localStorage.getItem("token");
+
+    if (token) {
+        loadFiles();
+    }
+
+}, []);
     useEffect(() => {
 
         loadFiles();
