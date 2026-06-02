@@ -1,7 +1,6 @@
 import axios from "axios";
-
 const API = axios.create({
-  baseURL: "https://notesweb-backend-9yi6.onrender.com/api",
+  baseURL: "http://localhost:5000/api",
 });
 
 // Attach token

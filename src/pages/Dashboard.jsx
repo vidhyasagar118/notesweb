@@ -42,11 +42,7 @@ const user = JSON.parse(localStorage.getItem("user")) || {};
     }
 
 }, []);
-    useEffect(() => {
-
-        loadFiles();
-
-    }, []);
+  
 
 const uploadFile = async () => {
 

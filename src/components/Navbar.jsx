@@ -5,12 +5,10 @@ function Navbar({ user }) {
 
     const navigate = useNavigate();
 
-    const logout = () => {
-localStorage.removeItem("token");
-localStorage.removeItem("user");
-        navigate("/");
-    };
-
+  const logout = () => {
+    localStorage.clear();
+    navigate("/");
+};
     return (
 
         <div className="navbar">

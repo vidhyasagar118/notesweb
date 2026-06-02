@@ -15,8 +15,7 @@ import SharedSubjectsPage from "./pages/SharedSubjectsPage";
 import SharedSubjectFiles from "./pages/SharedSubjectFiles";
 function ProtectedRoute({ children }) {
 
-    const token = sessionStorage.getItem("token");
-
+const token = localStorage.getItem("token");
     return token ? children : <Navigate to="/" />;
 }
 
