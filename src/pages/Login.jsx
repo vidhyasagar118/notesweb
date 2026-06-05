@@ -1,150 +1,122 @@
-// Login.jsx
-
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import API from "../api";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 function Login() {
 
-    const navigate = useNavigate();
 
-    const [isLogin, setIsLogin] = useState(true);
+const navigate = useNavigate();
 
-    const [form, setForm] = useState({
-        name: "",
-        password: ""
-    });
+const [isLogin, setIsLogin] = useState(true);
 
-    useEffect(() => {
+const [form, setForm] = useState({
+    name: "",
+    password: ""
+});
 
-    const token = localStorage.getItem("token");
+const handleSubmit = async () => {
 
-        if (token) {
+    // ✅ validation
+    if (!form.name || !form.password) {
+        alert("Please fill all fields");
+        return;
+    }
+
+    try {
+
+        if (isLogin) {
+
+            const res = await API.post("/auth/login", form);
+
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem(
+                "user",
+                JSON.stringify(res.data.user)
+            );
 
             navigate("/dashboard");
+
+        } else {
+
+            await API.post("/auth/register", form);
+
+            alert("Account Created");
+            setIsLogin(true);
         }
 
-    }, []);
+    } catch (err) {
 
-    const handleSubmit = async () => {
+        alert(
+            err.response?.data?.message ||
+            "Something went wrong"
+        );
+    }
+};
 
-        try {
+return (
 
-            if (isLogin) {
+    <div className="loginPageMain">
 
-                const res = await API.post("/auth/login", form);
-localStorage.setItem("token", res.data.token);
+        <h1 className="loginPageLogo">
+            notes.com
+        </h1>
 
-localStorage.setItem(
-  "user",
-  JSON.stringify(res.data.user)
-);
-                navigate("/dashboard");
+        <div className="loginCard">
 
-            } else {
+            <h2 className="loginTitle">
+                {isLogin ? "Login" : "Create Account"}
+            </h2>
 
-                await API.post("/auth/register", form);
+            <input
+                className="loginInputName"
+                placeholder="Name"
+                onChange={(e) =>
+                    setForm({
+                        ...form,
+                        name: e.target.value
+                    })
+                }
+            />
 
-                alert("Account Created");
+            <input
+                className="loginInputPassword"
+                type="password"
+                placeholder="Password"
+                onChange={(e) =>
+                    setForm({
+                        ...form,
+                        password: e.target.value
+                    })
+                }
+            />
 
-                setIsLogin(true);
-            }
+            <button
+                className="loginMainButton"
+                onClick={handleSubmit}
+            >
+                {isLogin ? "Login" : "Register"}
+            </button>
 
-        } catch (err) {
+            <p className="loginBottomText">
+                {isLogin ? "No account?" : "Already have account?"}
+            </p>
 
-            alert(
-                err.response?.data?.message ||
-                "Something went wrong"
-            );
-        }
-    };
-
-    return (
-
-        <div className="loginPageMain">
-
-            <h1 className="loginPageLogo">
-                notes.com
-            </h1>
-
-            <div className="loginCard">
-
-                <h2 className="loginTitle">
-
-                    {
-                        isLogin
-                        ? "Login"
-                        : "Create Account"
-                    }
-
-                </h2>
-
-                <input
-                    className="loginInputName"
-                    placeholder="Name"
-                    onChange={(e) =>
-                        setForm({
-                            ...form,
-                            name: e.target.value
-                        })
-                    }
-                />
-
-                <input
-                    className="loginInputPassword"
-                    type="password"
-                    placeholder="Password"
-                    onChange={(e) =>
-                        setForm({
-                            ...form,
-                            password: e.target.value
-                        })
-                    }
-                />
-
-                <button
-                    className="loginMainButton"
-                    onClick={handleSubmit}
-                >
-
-                    {
-                        isLogin
-                        ? "Login"
-                        : "Register"
-                    }
-
-                </button>
-
-                <p className="loginBottomText">
-
-                    {
-                        isLogin
-                        ? "No account?"
-                        : "Already have account?"
-                    }
-
-                </p>
-
-                <button
-                    className="switchAuthButton"
-                    onClick={() =>
-                        setIsLogin(!isLogin)
-                    }
-                >
-
-                    {
-                        isLogin
-                        ? "Create Account"
-                        : "Login"
-                    }
-
-                </button>
-
-            </div>
+            <button
+                className="switchAuthButton"
+                onClick={() =>
+                    setIsLogin(!isLogin)
+                }
+            >
+                {isLogin ? "Create Account" : "Login"}
+            </button>
 
         </div>
-    );
+
+    </div>
+)
+
+
 }
 
 export default Login;
