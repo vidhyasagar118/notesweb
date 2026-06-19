@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./Contact.css";
+import "./Contact.css"
 import API from "../api";
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -9,7 +9,7 @@ const Contact = () => {
     message: "",
   });
 
-  
+
   const [msg, setMsg] = useState("");
 
   const handleChange = (e) => {
