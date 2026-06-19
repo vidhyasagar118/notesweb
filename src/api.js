@@ -4,11 +4,9 @@ const API = axios.create({
   baseURL: "https://notesweb-backend-9yi6.onrender.com/api",
 });
 
-// Attach token
 API.interceptors.request.use((req) => {
-  const token = localStorage.getItem("token");
 
-  console.log("TOKEN:", token);
+  const token = localStorage.getItem("token");
 
   if (token) {
     req.headers.Authorization = `Bearer ${token}`;
@@ -16,5 +14,23 @@ API.interceptors.request.use((req) => {
 
   return req;
 });
+
+API.interceptors.response.use(
+
+  (response) => response,
+
+  (error) => {
+
+    if (error.response?.status === 401) {
+
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+
+      window.location.href = "/login";
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 export default API;

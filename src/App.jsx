@@ -13,11 +13,10 @@ import SubjectsPage from "./pages/SubjectsPage";
 import SubjectFiles from "./pages/SubjectFiles";
 import SharedSubjectsPage from "./pages/SharedSubjectsPage";
 import SharedSubjectFiles from "./pages/SharedSubjectFiles";
-function ProtectedRoute({ children }) {
+import Contact from "./pages/Contact";
+import LandingPage from "./pages/LandingPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
-const token = localStorage.getItem("token");
-    return token ? children : <Navigate to="/" />;
-}
 
 function App() {
 
@@ -29,8 +28,20 @@ function App() {
 
                 <Route
                     path="/"
+                    element={<LandingPage />}
+                />
+
+                 <Route
+                    path="/login"
                     element={<Login />}
                 />
+                
+                
+                 <Route
+                    path="/contact"
+                    element={<Contact />}
+                />
+
 
                 <Route
                     path="/dashboard"

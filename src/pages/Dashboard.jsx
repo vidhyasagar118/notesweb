@@ -5,45 +5,70 @@ import API from "../api";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import "./Dashboard.css";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
 
 const user = JSON.parse(localStorage.getItem("user")) || {};
     const [semester, setSemester] = useState("");
     const [subject, setSubject] = useState("");
+    const navigate = useNavigate();
 
+const [loading, setLoading] = useState(true);
     const [filesToUpload, setFilesToUpload] = useState([]);
 
     const [files, setFiles] = useState({});
 
     const [groupCode, setGroupCode] = useState("");
     const [sharedFiles, setSharedFiles] = useState(null);
+const loadFiles = async () => {
+    try {
+        const res = await API.get("/files/myfiles");
+        setFiles(res.data || {});
+    } catch (err) {
+        console.log(err);
+        setFiles({});
+    }
+};
+ 
+  
 
-    const loadFiles = async () => {
+
+
+useEffect(() => {
+
+    const verifyUser = async () => {
+
+        const token = localStorage.getItem("token");
+
+     if (!token) {
+    setLoading(false);
+    navigate("/login");
+    return;
+}
 
         try {
 
-            const res = await API.get("/files/myfiles");
+await API.get("/auth/verify");
 
-            setFiles(res.data);
+await loadFiles();
+
+setLoading(false);
+
 
         } catch (err) {
 
-            console.log(err);
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+    setLoading(false);
+
+            navigate("/login");
         }
     };
 
-    useEffect(() => {
-
-    const token = localStorage.getItem("token");
-
-    if (token) {
-        loadFiles();
-    }
+    verifyUser();
 
 }, []);
-  
-
 const uploadFile = async () => {
 
     if (!semester || !subject || filesToUpload.length === 0) {
@@ -110,6 +135,22 @@ const uploadFile = async () => {
         }
     };
 
+    if (loading) {
+    return (
+        <div
+            style={{
+                height: "100vh",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontSize: "24px",
+                fontWeight: "bold"
+            }}
+        >
+            Checking Authentication...
+        </div>
+    );
+}
     return (
 
         <>

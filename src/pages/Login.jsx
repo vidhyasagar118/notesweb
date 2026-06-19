@@ -29,13 +29,13 @@ const handleSubmit = async () => {
 
             const res = await API.post("/auth/login", form);
 
-            localStorage.setItem("token", res.data.token);
-            localStorage.setItem(
-                "user",
-                JSON.stringify(res.data.user)
-            );
+          localStorage.setItem("token", res.data.token);
+localStorage.setItem(
+  "user",
+  JSON.stringify(res.data.user)
+);
 
-            navigate("/dashboard");
+navigate("/dashboard");
 
         } else {
 
