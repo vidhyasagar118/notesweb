@@ -1,0 +1,179 @@
+/* =========================
+   CONTACT SECTION
+================ */
+
+.contact-page {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.contact-card {
+  width: 100%;
+  max-width: 750px;
+
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(15px);
+
+  border-radius: 30px;
+
+  padding: 50px;
+
+  box-shadow:
+    0 0 40px rgba(79, 125, 255, 0.15);
+
+  transition: 0.3s ease;
+}
+
+.contact-card:hover {
+  box-shadow:
+    0 0 50px rgba(79, 125, 255, 0.25);
+}
+
+.contact-card h1 {
+  text-align: center;
+  font-size: 42px;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.contact-subtitle {
+  text-align: center;
+  color: #b8c2e0;
+  margin-bottom: 35px;
+  font-size: 17px;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.contact-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-card input,
+.contact-card textarea {
+  width: 100%;
+
+  padding: 16px 18px;
+
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  background: rgba(255, 255, 255, 0.05);
+
+  color: white;
+  font-size: 16px;
+
+  outline: none;
+
+  transition: 0.3s;
+}
+
+.contact-card input::placeholder,
+.contact-card textarea::placeholder {
+  color: #9ea8c5;
+}
+
+.contact-card input:focus,
+.contact-card textarea:focus {
+  border-color: #4f7dff;
+
+  box-shadow:
+    0 0 15px rgba(79, 125, 255, 0.3);
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.contact-card button {
+  padding: 16px;
+
+  border: none;
+  border-radius: 14px;
+
+  cursor: pointer;
+
+  font-size: 17px;
+  font-weight: 600;
+
+  color: white;
+
+  background: linear-gradient(
+    135deg,
+    #4f7dff,
+    #355cff
+  );
+
+  box-shadow:
+    0 0 20px rgba(79, 125, 255, 0.4);
+
+  transition: 0.3s;
+}
+
+.contact-card button:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 0 30px rgba(79, 125, 255, 0.6);
+}
+
+/* =========================
+   MESSAGE
+========================= */
+
+.msg {
+  margin-top: 20px;
+  text-align: center;
+
+  color: #4f7dff;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+  .contact-card {
+    padding: 30px 20px;
+  }
+
+  .contact-card h1 {
+    font-size: 32px;
+  }
+
+  .contact-subtitle {
+    font-size: 15px;
+  }
+
+  .contact-card input,
+  .contact-card textarea {
+    font-size: 15px;
+  }
+
+  .contact-card button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .contact-card h1 {
+    font-size: 28px;
+  }
+
+  .contact-card {
+    border-radius: 20px;
+  }
+}
