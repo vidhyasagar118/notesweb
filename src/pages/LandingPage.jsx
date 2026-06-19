@@ -28,15 +28,16 @@ const [menuOpen, setMenuOpen] = useState(false);
     className="logo"
     onClick={() => scrollToSection("home")}
   >
-    📘 <span>NOTES.COM</span>
-  </div>
-
-  <div
+    <div
     className="menu-toggle"
     onClick={() => setMenuOpen(!menuOpen)}
   >
     ☰
   </div>
+    📘 <span>NOTES.COM</span>
+  </div>
+
+  
 
   <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
 
