@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./LandingPage.css";
 import Contact from "./Contact";
 import  { useState } from "react";
+import  { useEffect } from "react";
 export default function LandingPage() {
 const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -18,6 +19,18 @@ const [menuOpen, setMenuOpen] = useState(false);
     }
   };
 
+  useEffect(() => {
+
+  if (menuOpen) {
+
+    const timer = setTimeout(() => {
+      setMenuOpen(false);
+    }, 10000); // 10 seconds
+
+    return () => clearTimeout(timer);
+  }
+
+}, [menuOpen]);
   return (
     <div className="landing-page">
 
@@ -40,22 +53,33 @@ const [menuOpen, setMenuOpen] = useState(false);
   
 
   <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
+<li onClick={() => {
+  scrollToSection("home");
+  setMenuOpen(false);
+}}>Home</li>
 
-    <li onClick={() => scrollToSection("home")}>Home</li>
+   
 
-    <li onClick={() => scrollToSection("features")}>Features</li>
+    <li onClick={() => {
+  scrollToSection("features");
+  setMenuOpen(false);
+}}>
+  Features
+</li>
 
-    <li onClick={() => scrollToSection("howitworks")}>
-      How It Works
-    </li>
+  <li onClick={() => {
+  scrollToSection("about");
+  setMenuOpen(false);
+}}>
+  About Us
+</li>
 
-    <li onClick={() => scrollToSection("about")}>
-      About Us
-    </li>
-
-    <li onClick={() => scrollToSection("contact")}>
-      Contact
-    </li>
+<li onClick={() => {
+  scrollToSection("contact");
+  setMenuOpen(false);
+}}>
+  Contact
+</li>
 
   </ul>
 
