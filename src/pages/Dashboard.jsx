@@ -13,7 +13,7 @@ const user = JSON.parse(localStorage.getItem("user")) || {};
     const [semester, setSemester] = useState("");
     const [subject, setSubject] = useState("");
     const navigate = useNavigate();
-
+const [uploading, setUploading] = useState(false);
 const [loading, setLoading] = useState(true);
     const [filesToUpload, setFilesToUpload] = useState([]);
 
@@ -70,54 +70,50 @@ setLoading(false);
 
 }, []);
 const uploadFile = async () => {
+  if (!semester || !subject || filesToUpload.length === 0) {
+    return alert("Please fill all fields");
+  }
 
-    if (!semester || !subject || filesToUpload.length === 0) {
+  const formData = new FormData();
 
-        return alert("Please fill all fields");
-    }
+  formData.append("semester", semester);
+  formData.append("subject", subject);
 
-    const formData = new FormData();
+  filesToUpload.forEach((file) => {
+    formData.append("files", file);
+  });
 
-    formData.append("semester", semester);
+  try {
+    setUploading(true);
 
-    formData.append("subject", subject);
+    await API.post(
+      "/files/upload",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        },
+        timeout: 1000 * 60 * 30
+      }
+    );
 
-    filesToUpload.forEach((file) => {
+    alert("Files Uploaded");
 
-        formData.append("files", file);
-    });
+    setSemester("");
+    setSubject("");
+    setFilesToUpload([]);
 
-    try {
+    loadFiles();
+  } catch (err) {
+    console.log(err);
 
-        await API.post(
-            "/files/upload",
-            formData,
-            {
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                },
-
-                timeout: 1000 * 60 * 5
-            }
-        );
-
-        alert("Files Uploaded");
-
-        setSemester("");
-        setSubject("");
-        setFilesToUpload([]);
-
-        loadFiles();
-
-    } catch (err) {
-
-        console.log(err);
-
-        alert(
-            err.response?.data?.message ||
-            "Upload failed"
-        );
-    }
+    alert(
+      err.response?.data?.message ||
+      "Upload failed"
+    );
+  } finally {
+    setUploading(false);
+  }
 };
     const openShared = async () => {
 
@@ -220,19 +216,21 @@ const uploadFile = async () => {
                         onChange={(e) => setSubject(e.target.value)}
                     />
 
-                    <input
-                        className="fileuploadinp"
-                        type="file"
-                        multiple
-                        onChange={(e) => setFilesToUpload(Array.from(e.target.files))}
-                    />
+                <input
+  className="fileuploadinp"
+  type="file"
+  multiple
+  accept=".pdf,.mp4,.avi,.mkv,.mov"
+  onChange={(e) => setFilesToUpload(Array.from(e.target.files))}
+/>
 
-                    <button
-                        onClick={uploadFile}
-                        className="uploadbtn"
-                    >
-                        Upload
-                    </button>
+<button
+  onClick={uploadFile}
+  className="uploadbtn"
+  disabled={uploading}
+>
+  {uploading ? "Uploading..." : "Upload"}
+</button>
 
                     <hr />
 

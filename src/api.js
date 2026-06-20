@@ -1,11 +1,10 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://notesweb-backend-9yi6.onrender.com/api",
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 API.interceptors.request.use((req) => {
-
   const token = localStorage.getItem("token");
 
   if (token) {
@@ -16,13 +15,10 @@ API.interceptors.request.use((req) => {
 });
 
 API.interceptors.response.use(
-
   (response) => response,
 
   (error) => {
-
     if (error.response?.status === 401) {
-
       localStorage.removeItem("token");
       localStorage.removeItem("user");
 

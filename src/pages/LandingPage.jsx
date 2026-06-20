@@ -4,7 +4,13 @@ import "./LandingPage.css";
 import Contact from "./Contact";
 import  { useState } from "react";
 import  { useEffect } from "react";
+import API from "../api";
 export default function LandingPage() {
+  const [stats, setStats] = useState({
+  totalStudents: 0,
+  totalNotes: 0,
+  subjects: 0
+});
 const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -31,6 +37,21 @@ const [menuOpen, setMenuOpen] = useState(false);
   }
 
 }, [menuOpen]);
+useEffect(() => {
+
+  const fetchStats = async () => {
+    try {
+      const res = await API.get("/stats");
+
+      setStats(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  fetchStats();
+
+}, []);
   return (
     <div className="landing-page">
 
@@ -123,18 +144,18 @@ const [menuOpen, setMenuOpen] = useState(false);
           <div className="stats">
 
             <div className="stat-box">
-              <h2>5000+</h2>
-              <p>Notes Uploaded</p>
+<h2>{stats.totalNotes}+</h2>
+<p>Notes Uploaded</p>
             </div>
 
             <div className="stat-box">
-              <h2>1000+</h2>
-              <p>Students Joined</p>
+<h2>{stats.totalStudents}+</h2>
+<p>Students Joined</p>
             </div>
 
             <div className="stat-box">
-              <h2>50+</h2>
-              <p>Subjects Covered</p>
+              <h2>{stats.subjects}+</h2>
+<p>Subjects Covered</p>
             </div>
 
           </div>
