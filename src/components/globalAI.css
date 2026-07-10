@@ -55,6 +55,7 @@
 
 /* Messages */
 .aiMessages {
+  
   flex: 1;
   padding: 12px;
   overflow-y: auto;
@@ -195,7 +196,9 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
-
+.ai-floating-msg{
+  color: white;
+}
 /* Loader */
 .loader {
   border: 3px solid #ddd;
