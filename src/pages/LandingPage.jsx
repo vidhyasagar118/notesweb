@@ -183,10 +183,64 @@ useEffect(() => {
   <h3>📄 PDF Support</h3>
   <p>Upload and download PDFs easily</p>
 </div>
+<div className="preview-card">
+  <h3>🤖 AI Assistant</h3>
+  <p>Ask questions and get instant answers</p>
+</div>
 
+<div className="preview-card">
+  <h3>⚡ Fast Response</h3>
+  <p>Get quick and clear explanations</p>
+</div>
         </div>
+        
 
       </section>
+      <section className="ai-section">
+
+  <h2>
+    🤖 Smart AI Assistant
+  </h2>
+
+  <p className="ai-subtitle">
+    Experience next-level learning with our intelligent AI
+  </p>
+
+  <div className="ai-grid">
+
+    <div className="ai-card">
+      <h3>📄 Learn from Your Notes</h3>
+      <p>
+        Upload your PDFs and ask questions directly.
+        AI reads your notes and gives accurate answers instantly.
+      </p>
+    </div>
+
+    <div className="ai-card">
+      <h3>🧠 Smart Answering</h3>
+      <p>
+        AI automatically decides whether to answer from your notes
+        or from general knowledge — no manual selection needed.
+      </p>
+    </div>
+
+    <div className="ai-card">
+      <h3>⚡ Instant Responses</h3>
+      <p>
+        Get fast, clear, and well-structured answers like a personal teacher.
+      </p>
+    </div>
+
+    <div className="ai-card">
+      <h3>💡 Easy to Use</h3>
+      <p>
+        Just upload → ask → learn. No complicated steps, everything is simple.
+      </p>
+    </div>
+
+  </div>
+
+</section>
 
       {/* Features */}
 
@@ -248,6 +302,7 @@ useEffect(() => {
         </div>
 
       </section>
+      
 
       {/* How It Works */}
 

@@ -1,6 +1,15 @@
 import "./subjectcard.css";
 
-function SubjectCard({ files, deleteFile }) {
+function SubjectCard({ files, deleteFile, setCurrentPDF }) {
+
+    const handleView = (fileUrl) => {
+        // 🔥 AI ko bata konsa PDF open hua
+        if (setCurrentPDF) {
+            setCurrentPDF(fileUrl);
+        }
+
+    };
+
     return (
         <div className="filesGrid">
             {Array.isArray(files) && files.map((file, index) => (
@@ -13,27 +22,21 @@ function SubjectCard({ files, deleteFile }) {
 
                     <div className="fileButtons">
 
-                        {/* ✅ FINAL VIEW FIX */}
                         <button
-                            onClick={() =>
-                                window.open(
-                                    file.filepath + "#toolbar=0",
-                                    "_blank"
-                                )
-                            }
+                            onClick={() => handleView(file.filepath)}
                             className="viewButton"
                         >
                             View
                         </button>
 
-                        {/* ✅ DOWNLOAD */}
+                        {/* DOWNLOAD */}
                         <a href={file.downloadUrl}>
                             <button className="downloadButton">
                                 Download
                             </button>
                         </a>
 
-                        {/* ✅ DELETE */}
+                        {/* DELETE */}
                         {deleteFile && (
                             <button
                                 className="deleteButton"
@@ -42,6 +45,7 @@ function SubjectCard({ files, deleteFile }) {
                                 Delete
                             </button>
                         )}
+
                     </div>
                 </div>
             ))}

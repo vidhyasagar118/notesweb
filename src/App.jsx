@@ -4,9 +4,9 @@ import {
     BrowserRouter,
     Routes,
     Route,
-    Navigate
+    Navigate,
 } from "react-router-dom";
-
+import { useState } from "react";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import SubjectsPage from "./pages/SubjectsPage";
@@ -16,12 +16,14 @@ import SharedSubjectFiles from "./pages/SharedSubjectFiles";
 import Contact from "./pages/Contact";
 import LandingPage from "./pages/LandingPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import GlobalAI from "./components/GlobalAI";
 
 
 function App() {
+const [currentPDF, setCurrentPDF] = useState(null);
 
     return (
-
+<> 
         <BrowserRouter>
 
             <Routes>
@@ -61,14 +63,14 @@ function App() {
                     }
                 />
 
-                <Route
-                    path="/subject/:semester/:subject"
-                    element={
-                        <ProtectedRoute>
-                            <SubjectFiles />
-                        </ProtectedRoute>
-                    }
-                />
+               <Route
+  path="/subject/:semester/:subject"
+  element={
+    <ProtectedRoute>
+      <SubjectFiles setCurrentPDF={setCurrentPDF} />
+    </ProtectedRoute>
+  }
+/>
 <Route
     path="/sharedsubjects/:groupCode/:semester"
     element={
@@ -89,6 +91,9 @@ function App() {
             </Routes>
 
         </BrowserRouter>
+<GlobalAI currentPDF={currentPDF} />
+        </>
+        
     );
 }
 
