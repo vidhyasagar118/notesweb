@@ -17,14 +17,19 @@ import Contact from "./pages/Contact";
 import LandingPage from "./pages/LandingPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import GlobalAI from "./components/GlobalAI";
-
-
+import Terms from "./pages/Terms";
+import Disclaimer from "./pages/Disclaimer";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Footer from "./components/Footer";
+import MainNavbar from "./pages/MainNavbar";
 function App() {
 const [currentPDF, setCurrentPDF] = useState(null);
 
     return (
 <> 
         <BrowserRouter>
+      {/* Har page par common navbar */}
+      <MainNavbar />
 
             <Routes>
 
@@ -43,7 +48,9 @@ const [currentPDF, setCurrentPDF] = useState(null);
                     path="/contact"
                     element={<Contact />}
                 />
-
+<Route path="/privacy-policy" element={<PrivacyPolicy />} />
+<Route path="/terms" element={<Terms />} />
+<Route path="/disclaimer" element={<Disclaimer />} />
 
                 <Route
                     path="/dashboard"
@@ -80,6 +87,7 @@ const [currentPDF, setCurrentPDF] = useState(null);
     }
 />
 
+
 <Route
     path="/sharedfiles/:groupCode/:semester/:subject"
     element={
@@ -89,6 +97,7 @@ const [currentPDF, setCurrentPDF] = useState(null);
     }
 />
             </Routes>
+<Footer />
 
         </BrowserRouter>
 <GlobalAI currentPDF={currentPDF} />

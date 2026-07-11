@@ -34,6 +34,7 @@ localStorage.setItem(
   "user",
   JSON.stringify(res.data.user)
 );
+window.dispatchEvent(new Event("authChanged"));
 
 navigate("/dashboard");
 

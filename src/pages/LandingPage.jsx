@@ -1,9 +1,8 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
 import "./LandingPage.css";
 import Contact from "./Contact";
 import  { useState } from "react";
 import  { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import API from "../api";
 export default function LandingPage() {
   const [stats, setStats] = useState({
@@ -11,32 +10,8 @@ export default function LandingPage() {
   totalNotes: 0,
   subjects: 0
 });
-const [menuOpen, setMenuOpen] = useState(false);
-  const navigate = useNavigate();
-
-  const scrollToSection = (id) => {
-    const section = document.getElementById(id);
-
-    if (section) {
-      section.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  };
-
-  useEffect(() => {
-
-  if (menuOpen) {
-
-    const timer = setTimeout(() => {
-      setMenuOpen(false);
-    }, 10000); // 10 seconds
-
-    return () => clearTimeout(timer);
-  }
-
-}, [menuOpen]);
+const navigate=useNavigate();
+  
 useEffect(() => {
 
   const fetchStats = async () => {
@@ -55,64 +30,7 @@ useEffect(() => {
   return (
     <div className="landing-page">
 
-      {/* Navbar */}
-<nav className="navbar">
-
-  <div
-    className="logo"
-    onClick={() => scrollToSection("home")}
-  >
-    <div
-    className="menu-toggle"
-    onClick={() => setMenuOpen(!menuOpen)}
-  >
-    ☰
-  </div>
-    📘 <span>NOTES.COM</span>
-  </div>
-
-  
-
-  <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
-<li onClick={() => {
-  scrollToSection("home");
-  setMenuOpen(false);
-}}>Home</li>
-
-   
-
-    <li onClick={() => {
-  scrollToSection("features");
-  setMenuOpen(false);
-}}>
-  Features
-</li>
-
-  <li onClick={() => {
-  scrollToSection("about");
-  setMenuOpen(false);
-}}>
-  About Us
-</li>
-
-<li onClick={() => {
-  scrollToSection("contact");
-  setMenuOpen(false);
-}}>
-  Contact
-</li>
-
-  </ul>
-
-  <button
-    className="nav-btn"
-    onClick={() => navigate("/login")}
-  >
-    Login / Get Started
-  </button>
-
-</nav>
-
+      
       {/* Hero */}
 
       <section
@@ -422,53 +340,8 @@ useEffect(() => {
 
       </section>
 
-      {/* Footer */}
 
-<section>
-  <Contact />
-</section>
-      <footer
-        className="footer"
-        id="contact"
-      >
 
-        <div className="footer-logo">
-          📘 NOTES.COM
-        </div>
-
-        <div className="footer-links">
-
-          <span
-            onClick={() => scrollToSection("home")}
-          >
-            Home
-          </span>
-
-          <span
-            onClick={() => scrollToSection("features")}
-          >
-            Features
-          </span>
-
-          <span
-            onClick={() => scrollToSection("about")}
-          >
-            About
-          </span>
-
-          <span
-            onClick={() => scrollToSection("contact")}
-          >
-            Contact
-          </span>
-
-        </div>
-
-        <p>
-          © 2026 Notes.com | All Rights Reserved
-        </p>
-
-      </footer>
 
     </div>
   );

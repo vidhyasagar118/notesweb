@@ -217,3 +217,13 @@ hr{
         width: 100%;
     }
 }
+@media (max-width: 600px) {
+  select.semesterselect {
+    font-size: 13px !important;
+    line-height: 1.2;
+  }
+
+  select.semesterselect option {
+    font-size: 13px !important;
+  }
+}
