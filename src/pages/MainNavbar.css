@@ -8,7 +8,7 @@
   z-index: 1000;
 
   width: 100%;
-  min-height: 78px;
+  min-height: 105px;
 
   padding: 0 70px;
 
@@ -805,83 +805,63 @@
 /* =====================================
    MOBILE
 ===================================== */
-
 @media (max-width: 600px) {
-  .navbar {
-    padding: 8px 10px;
-    gap: 8px;
+
+  .navbar{
+    padding:23px 14px;
+    gap:12px;
   }
 
-  .logo {
-    font-size: 15px;
-  }
+  .main-user-info{
+    margin-top:8px;
+    padding-top:10px;
+    padding-bottom:4px;
 
-  .logo span {
-    max-width: 105px;
-  }
-
-  .menu-toggle {
-    width: 35px;
-    height: 35px;
-
-    font-size: 21px;
-  }
-
-  .nav-btn {
-    min-height: 36px;
-    padding: 0 9px;
-
-    font-size: 9px;
-  }
-
-  .main-user-info {
     grid-template-columns:
-      minmax(0, 1fr)
-      minmax(92px, 110px)
+      minmax(0,1fr)
+      110px
       auto;
 
-    gap: 5px;
-    padding-top: 7px;
+    gap:10px;
   }
 
-  .user-name-button,
-  .group-code-button,
-  .main-logout-button {
-    height: 38px;
+  .user-name-button{
+    height:44px;
+    padding:6px 10px;
+    border-radius:12px;
   }
 
-  .user-name-button {
-    padding: 4px 7px;
+  .user-avatar{
+    width:30px;
+    height:30px;
+    font-size:12px;
   }
 
-  .user-avatar {
-    width: 27px;
-    height: 27px;
-
-    font-size: 11px;
+  .user-name-text{
+    font-size:11px;
   }
 
-  .user-name-text {
-    font-size: 10px;
+  .group-code-button{
+    height:44px;
+    padding:6px 10px;
+    border-radius:12px;
   }
 
-  .group-code-button {
-    padding: 4px 6px;
+  .group-code-label{
+    font-size:7px;
   }
 
-  .group-code-label {
-    font-size: 6px;
+  .group-code-button strong{
+    font-size:10px;
   }
 
-  .group-code-button strong {
-    font-size: 9px;
+  .main-logout-button{
+    height:44px;
+    padding:0 12px;
+    border-radius:12px;
+    font-size:10px;
   }
 
-  .main-logout-button {
-    padding: 0 8px;
-
-    font-size: 8px;
-  }
 }
 
 /* =====================================
