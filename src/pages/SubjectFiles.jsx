@@ -12,8 +12,9 @@ function SubjectFiles({ setCurrentPDF }) {
     const [pdfUrl, setPdfUrl] = useState(null); // 🔥 NEW
 
     useEffect(() => {
-        loadFiles();
-    }, []);
+  loadFiles();
+}, [semester, subject]);
+
 
     const loadFiles = async () => {
         try {
@@ -24,6 +25,11 @@ function SubjectFiles({ setCurrentPDF }) {
         }
     };
 
+    useEffect(() => {
+    return () => {
+        setCurrentPDF(null);
+    };
+}, [setCurrentPDF]);
     const deleteFile = async (id) => {
         try {
             await API.delete(`/files/${id}`);
@@ -55,12 +61,27 @@ function SubjectFiles({ setCurrentPDF }) {
                 {/* 🔥 PDF VIEWER */}
                 {pdfUrl && (
                     <div style={{ marginTop: "20px" }}>
-                        <iframe
-                            src={pdfUrl}
-                            width="100%"
-                            height="600px"
-                            style={{ borderRadius: "10px" }}
-                        />
+                                <button
+            onClick={() => {
+                setPdfUrl(null);
+                setCurrentPDF(null);
+            }}
+            style={{
+                marginBottom: "10px",
+                padding: "8px 15px",
+                cursor: "pointer"
+            }}
+        >
+            ❌ Close PDF
+        </button>
+
+<iframe
+  src={pdfUrl}
+  title="PDF Viewer"
+  width="100%"
+  height="600px"
+  style={{ borderRadius: "10px", border: "none" }}
+/>
                     </div>
                 )}
 
