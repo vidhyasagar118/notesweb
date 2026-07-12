@@ -1,56 +1,71 @@
 import "./subjectcard.css";
 
-function SubjectCard({ files, deleteFile, setCurrentPDF }) {
+function SubjectCard({
+  files,
+  deleteFile,
+  setCurrentPDF
+}) {
+  const handleView = (file) => {
+    if (setCurrentPDF) {
+      setCurrentPDF(file);
+    }
+  };
 
-    const handleView = (fileUrl) => {
-        // 🔥 AI ko bata konsa PDF open hua
-        if (setCurrentPDF) {
-            setCurrentPDF(fileUrl);
-        }
+  return (
+    <div className="filesGrid">
+      {Array.isArray(files) &&
+        files.map((file, index) => (
+          <div
+            key={file._id}
+            className="fileCard"
+            style={{
+              animationDelay: `${index * 0.08}s`
+            }}
+          >
+            <h2>{file.filename}</h2>
 
-    };
+            <div className="fileButtons">
+              <button
+                type="button"
+                onClick={() => handleView(file)}
+                className="viewButton"
+              >
+                View
+              </button>
 
-    return (
-        <div className="filesGrid">
-            {Array.isArray(files) && files.map((file, index) => (
-                <div
-                    key={file._id}
-                    className="fileCard"
-                    style={{ animationDelay: `${index * 0.08}s` }}
+              <a
+                href={
+                  file.downloadUrl ||
+                  file.filepath
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+                className="downloadLink"
+              >
+                <button
+                  type="button"
+                  className="downloadButton"
                 >
-                    <h2>{file.filename}</h2>
+                  Download
+                </button>
+              </a>
 
-                    <div className="fileButtons">
-
-                        <button
-                            onClick={() => handleView(file.filepath)}
-                            className="viewButton"
-                        >
-                            View
-                        </button>
-
-                        {/* DOWNLOAD */}
-                        <a href={file.downloadUrl}>
-                            <button className="downloadButton">
-                                Download
-                            </button>
-                        </a>
-
-                        {/* DELETE */}
-                        {deleteFile && (
-                            <button
-                                className="deleteButton"
-                                onClick={() => deleteFile(file._id)}
-                            >
-                                Delete
-                            </button>
-                        )}
-
-                    </div>
-                </div>
-            ))}
-        </div>
-    );
+              {deleteFile && (
+                <button
+                  type="button"
+                  className="deleteButton"
+                  onClick={() =>
+                    deleteFile(file._id)
+                  }
+                >
+                  Delete
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
+    </div>
+  );
 }
 
 export default SubjectCard;

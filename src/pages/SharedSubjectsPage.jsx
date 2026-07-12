@@ -1,85 +1,97 @@
-import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import {
+  Link,
+  useParams
+} from "react-router-dom";
 import API from "../api";
 import "./Subjects.css";
 
 function SharedSubjectsPage() {
+  const { groupCode, semester } = useParams();
 
-    const { groupCode, semester } = useParams();
+  const [subjects, setSubjects] = useState({});
+  const [loading, setLoading] = useState(true);
 
-    const [subjects, setSubjects] = useState({});
-
-    useEffect(() => {
-
-        loadSubjects();
-
-    }, []);
-
+  useEffect(() => {
     const loadSubjects = async () => {
+      try {
+        setLoading(true);
 
-        try {
+        const res = await API.get(
+          `/files/shared/${encodeURIComponent(
+            groupCode
+          )}`
+        );
 
-            const res = await API.get(`/files/shared/${groupCode}`);
+        const semesterSubjects =
+          res.data?.grouped?.[semester] || {};
 
-            setSubjects(res.data.grouped[semester]);
+        setSubjects(semesterSubjects);
+      } catch (err) {
+        console.error(
+          "Shared subjects loading error:",
+          err
+        );
 
-        } catch (err) {
-
-            console.log(err);
-        }
+        setSubjects({});
+      } finally {
+        setLoading(false);
+      }
     };
 
-    return (
+    loadSubjects();
+  }, [groupCode, semester]);
 
-        <div className="subjectsPageMain">
+  const subjectNames = Object.keys(subjects);
 
-            <div className="subjectsContainer">
+  return (
+    <div className="subjectsPageMain">
+      <div className="subjectsContainer">
+        <h1 className="subjectsSemesterTitle">
+          {semester}
+        </h1>
 
-                <h1 className="subjectsSemesterTitle">
-                    {semester}
-                </h1>
+        {loading ? (
+          <p>Loading subjects...</p>
+        ) : subjectNames.length === 0 ? (
+          <p>No public subjects found.</p>
+        ) : (
+          <div className="subjectsGrid">
+            {subjectNames.map(
+              (subjectName, index) => (
+                <Link
+                  key={subjectName}
+                  to={`/sharedfiles/${encodeURIComponent(
+                    groupCode
+                  )}/${encodeURIComponent(
+                    semester
+                  )}/${encodeURIComponent(
+                    subjectName
+                  )}`}
+                  className="subjectsCardLink"
+                  style={{
+                    animationDelay: `${index * 0.1}s`
+                  }}
+                >
+                  <div className="subjectsCard">
+                    <div className="subjectsCardTop">
+                      <h2 className="subjectsName">
+                        {subjectName}
+                      </h2>
 
-                <div className="subjectsGrid">
-
-                    {
-                        subjects &&
-                        Object.keys(subjects).map((subject, index) => (
-
-                            <Link
-                                key={subject}
-                                to={`/sharedfiles/${groupCode}/${semester}/${subject}`}
-                                className="subjectsCardLink"
-                                style={{
-                                    animationDelay: `${index * 0.1}s`
-                                }}
-                            >
-
-                                <div className="subjectsCard">
-
-                                    <div className="subjectsCardTop">
-
-                                        <h2 className="subjectsName">
-                                            {subject}
-                                        </h2>
-
-                                        <span className="subjectsFileCount">
-                                            {subjects[subject].length} Files
-                                        </span>
-
-                                    </div>
-
-                                </div>
-
-                            </Link>
-                        ))
-                    }
-
-                </div>
-
-            </div>
-
-        </div>
-    );
+                      <span className="subjectsFileCount">
+                        {subjects[subjectName].length} Files
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              )
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default SharedSubjectsPage;
