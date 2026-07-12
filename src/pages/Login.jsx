@@ -60,7 +60,7 @@ return (
     <div className="loginPageMain">
 
         <h1 className="loginPageLogo">
-            notes.com
+            THENOTES.ONLINE
         </h1>
 
         <div className="loginCard">
