@@ -136,7 +136,7 @@ function MainNavbar() {
           ☰
         </div>
 
-        📘 <span>NOTES.WEB</span>
+        📘 <span>THENOTES.online</span>
       </div>
 
       <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
