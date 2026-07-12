@@ -98,8 +98,8 @@ useEffect(() => {
 </div>
 
 <div className="preview-card">
-  <h3>📄 PDF Support</h3>
-  <p>Upload and download PDFs easily</p>
+  <h3>📄 PDF Support ,video,photos and other</h3>
+  <p>Upload,  ,video,photos and other and download PDFs  and all easily</p>
 </div>
 <div className="preview-card">
   <h3>🤖 AI Assistant</h3>
@@ -129,7 +129,7 @@ useEffect(() => {
     <div className="ai-card">
       <h3>📄 Learn from Your Notes</h3>
       <p>
-        Upload your PDFs and ask questions directly.
+        Upload your PDFs   and photos and ask questions directly.
         AI reads your notes and gives accurate answers instantly.
       </p>
     </div>
