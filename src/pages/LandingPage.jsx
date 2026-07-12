@@ -168,7 +168,7 @@ useEffect(() => {
       >
 
         <h2>
-          Why Choose <span>Notes.com?</span>
+          Why Choose <span>thenotes.online?</span>
         </h2>
 
         <div className="features-grid">
@@ -302,10 +302,10 @@ useEffect(() => {
         id="about"
       >
 
-        <h2>About Notes.com</h2>
+        <h2>About thenotes.online</h2>
 
         <p>
-          Notes.com is a smart platform built for
+          Thenotes.online is a smart platform built for
           students. Upload semester-wise notes,
           organize study materials, share files
           with classmates and access everything
@@ -333,7 +333,7 @@ useEffect(() => {
             className="cta-btn"
             onClick={() => navigate("/login")}
           >
-            Explore Notes.com →
+            Explore thenotes.online→
           </button>
 
         </div>
