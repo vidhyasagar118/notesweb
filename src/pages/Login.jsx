@@ -2,7 +2,7 @@ import { useState } from "react";
 import API from "../api";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
-
+import { useEffect} from "react";
 function Login() {
 
 
@@ -15,6 +15,25 @@ const [form, setForm] = useState({
     password: ""
 });
 
+useEffect(() => {
+  const redirectLoggedInUser = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) return;
+
+    try {
+      await API.get("/auth/verify");
+      navigate("/dashboard", { replace: true });
+    } catch (error) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+
+      window.dispatchEvent(new Event("authChanged"));
+    }
+  };
+
+  redirectLoggedInUser();
+}, [navigate]);
 const handleSubmit = async () => {
 
     // ✅ validation

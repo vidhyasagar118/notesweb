@@ -1,5 +1,4 @@
 import "./LandingPage.css";
-import Contact from "./Contact";
 import  { useState } from "react";
 import  { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -27,6 +26,31 @@ useEffect(() => {
   fetchStats();
 
 }, []);
+const handleGetStarted = async () => {
+  const token = localStorage.getItem("token");
+
+  // Token hi nahi hai to login page
+  if (!token) {
+    navigate("/login");
+    return;
+  }
+
+  try {
+    // Backend se token verify
+    await API.get("/auth/verify");
+
+    // Valid token hai
+    navigate("/dashboard");
+  } catch (error) {
+    // Expired ya invalid token remove karo
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    window.dispatchEvent(new Event("authChanged"));
+
+    navigate("/login");
+  }
+};
   return (
     <div className="landing-page">
 
@@ -54,7 +78,7 @@ useEffect(() => {
 
           <button
             className="hero-btn"
-            onClick={() => navigate("/login")}
+            onClick={handleGetStarted}
           >
             Get Started Now →
           </button>
@@ -331,7 +355,7 @@ useEffect(() => {
 
           <button
             className="cta-btn"
-            onClick={() => navigate("/login")}
+          onClick={handleGetStarted}
           >
             Explore thenotes.online→
           </button>
