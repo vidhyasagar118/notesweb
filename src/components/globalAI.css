@@ -1,31 +1,115 @@
 .aiContainer {
   position: fixed;
+  right: 24px;
+  bottom: 50px;
   z-index: 999999;
   font-family: "Segoe UI", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
 }
-
-/* Floating Button */
 .aiButton {
-  width: 55px;
-  height: 55px;
+  width: 60px;
+  height: 60px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
   background: linear-gradient(135deg, #4f46e5, #7c3aed);
   color: white;
-  border-radius: 50%;
-  font-size: 24px;
+  font-size: 28px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: grab;
-  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.5);
-  transition: all 0.25s ease;
-}
 
+  box-shadow: 0 10px 25px rgba(79, 70, 229, 0.45);
+
+  animation:
+    attractAI 2s ease-in-out 60,
+    floatAI 2.5s ease-in-out 120s infinite,
+    pulseAI 2s 120s infinite;
+}
 .aiButton:hover {
-  transform: scale(1.1);
+  transform: scale(1.12);
 }
 
 .aiButton:active {
-  transform: scale(0.9);
+  transform: scale(0.92);
+}
+@keyframes attractAI {
+  0% {
+    transform: scale(1);
+  }
+
+  20% {
+    transform: scale(1.7);
+  }
+
+  40% {
+    transform: scale(1.2);
+  }
+
+  60% {
+    transform: scale(1.5);
+  }
+
+  80% {
+    transform: scale(0.95);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes floatAI {
+  0%,100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes pulseAI {
+  0% {
+    box-shadow:
+      0 0 0 0 rgba(124,58,237,.7),
+      0 10px 25px white;
+  }
+
+  70% {
+    box-shadow:
+      0 0 0 18px rgba(124,58,237,0),
+      0 10px 25px white;
+  }
+
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(124,58,237,0),
+      0 10px 25px white;
+  }
+}
+@keyframes popupAI {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  40% {
+    transform: scale(1.6);
+    opacity: 1;
+  }
+
+  70% {
+    transform: scale(0.9);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* Chat Box */
@@ -33,9 +117,9 @@
   width: 420px;
   height: 500px;
   border-radius: 16px;
-  margin-bottom: 10px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   background: rgba(20, 20, 20, 0.92);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -50,92 +134,98 @@
   color: white;
   font-size: 15px;
   background: linear-gradient(135deg, #4f46e5, #7c3aed);
-  border-radius: 16px 16px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.aiHeader span{
+color: white;
+
+}
+
+.aiCloseBtn {
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
 }
 
 /* Messages */
 .aiMessages {
-  
   flex: 1;
   padding: 12px;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 /* User Message */
 .user {
-  text-align: right;
+  align-self: flex-end;
+  text-align: left;
   margin: 8px 0;
-  background: black;
+  background: #111827;
   color: white;
   padding: 10px 12px;
   border-radius: 12px 12px 0 12px;
-  display: inline-block;
   max-width: 90%;
   font-size: 14px;
+  word-break: break-word;
 }
 
 /* AI Message */
 .ai {
+  align-self: flex-start;
   text-align: left;
   margin: 8px 0;
   background: #f8fafc;
-  color: #1e293b;
+  color: blue;
   padding: 12px;
   border-radius: 12px 12px 12px 0;
-  display: inline-block;
   max-width: 90%;
   line-height: 1.6;
   font-size: 14px;
+  word-break: break-word;
 }
 
-/* 🔥 HEADINGS COLORS */
 .ai h1 {
   color: #1d4ed8;
-  /* Blue */
   font-size: 20px;
   margin: 10px 0;
 }
 
 .ai h2 {
   color: #9333ea;
-  /* Purple */
   font-size: 18px;
   margin: 8px 0;
 }
 
 .ai h3 {
   color: #059669;
-  /* Green */
   font-size: 16px;
   margin: 6px 0;
 }
 
-/* 🔥 PARAGRAPH */
 .ai p {
   color: #334155;
   margin: 6px 0;
 }
 
-/* 🔥 BULLET POINTS (Important Points) */
-.ai ul {
+.ai ul,
+.ai ol {
   padding-left: 20px;
 }
 
 .ai ul li {
   margin-bottom: 6px;
   color: #0f172a;
-  position: relative;
 }
 
 .ai ul li::marker {
   color: #ef4444;
-  /* red bullet 🔥 */
   font-weight: bold;
-}
-
-/* 🔥 NUMBERED LIST */
-.ai ol {
-  padding-left: 20px;
 }
 
 .ai ol li {
@@ -146,11 +236,9 @@
 
 .ai ol li::marker {
   color: #2563eb;
-  /* blue numbers */
   font-weight: bold;
 }
 
-/* 🔥 CODE BLOCK */
 .ai pre {
   background: #020617;
   color: #22d3ee;
@@ -158,6 +246,7 @@
   border-radius: 10px;
   overflow-x: auto;
   margin-top: 8px;
+  max-width: 100%;
 }
 
 .ai code {
@@ -174,12 +263,17 @@
 
 .aiInput input {
   flex: 1;
+  min-width: 0;
   padding: 10px;
   border-radius: 8px;
   border: none;
   outline: none;
   background: rgba(255, 255, 255, 0.08);
   color: white;
+}
+
+.aiInput input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .aiInput button {
@@ -196,11 +290,18 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
-.ai-floating-msg{
+
+.ai-floating-msg {
+  background: rgba(15, 23, 42, 0.95);
   color: white;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
-/* Loader */
+
 .loader {
+  display: inline-block;
   border: 3px solid #ddd;
   border-top: 3px solid #4f46e5;
   border-radius: 50%;
@@ -209,7 +310,6 @@
   animation: spin 0.8s linear infinite;
 }
 
-/* Animation */
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -224,37 +324,51 @@
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
+
 @media (max-width: 600px) {
+  .aiContainer {
+    right: 12px;
+    bottom: 250px;
+  }
 
   .aiBox {
-    width: 300px;   /* 🔥 perfect balanced */
-    height: 500px;  /* 🔥 comfortable */
-    position: absolute; /* ⚠️ important for floating */
+    width: calc(100vw - 24px);
+    max-width: 340px;
+    height: 50vh;
+    max-height: 520px;
   }
 
-  .aiContainer {
-    position: fixed;
+  .aiButton {
+    width: 52px;
+    height: 52px;
+    font-size: 22px;
   }
 
-  /* input thoda compact */
   .aiInput {
-    padding: 6px;
+    padding: 7px;
   }
 
   .aiInput input {
-    padding: 7px;
+    padding: 8px;
     font-size: 12px;
   }
 
   .aiInput button {
-    padding: 7px 10px;
+    padding: 8px 10px;
     font-size: 12px;
   }
 
-  .user, .ai {
+  .user,
+  .ai {
     font-size: 12px;
+    max-width: 88%;
+  }
+
+  .ai-floating-msg {
+    font-size: 12px;
+    max-width: 220px;
   }
 }
