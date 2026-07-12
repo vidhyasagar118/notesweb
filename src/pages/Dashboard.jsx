@@ -218,7 +218,7 @@ const uploadFile = async () => {
           className="fileuploadinp"
           type="file"
           multiple
-          accept=".pdf,.mp4,.avi,.mkv,.mov"
+          accept="accept=.pdf,.mp4,.avi,.mkv,.mov,.jpg,.jpeg,.png,.webp,.gif"
           onChange={(e) =>
             setFilesToUpload(
               Array.from(e.target.files)
