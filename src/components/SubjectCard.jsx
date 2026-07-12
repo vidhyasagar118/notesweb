@@ -3,12 +3,16 @@ import "./subjectcard.css";
 function SubjectCard({
   files,
   deleteFile,
-  setCurrentPDF
+  onView,
 }) {
-  const handleView = (file) => {
-    if (setCurrentPDF) {
-      setCurrentPDF(file);
-    }
+  const getFileName = (file) => {
+    return (
+      file?.displayName ||
+      file?.filename ||
+      file?.originalName ||
+      file?.originalname ||
+      "Untitled File"
+    );
   };
 
   return (
@@ -16,18 +20,27 @@ function SubjectCard({
       {Array.isArray(files) &&
         files.map((file, index) => (
           <div
-            key={file._id}
+            key={
+              file._id ||
+              `${getFileName(file)}-${index}`
+            }
             className="fileCard"
             style={{
-              animationDelay: `${index * 0.08}s`
+              animationDelay: `${
+                index * 0.08
+              }s`,
             }}
           >
-            <h2>{file.filename}</h2>
+            <h2 className="fileCardName">
+              {getFileName(file)}
+            </h2>
 
             <div className="fileButtons">
               <button
                 type="button"
-                onClick={() => handleView(file)}
+                onClick={() =>
+                  onView?.(file)
+                }
                 className="viewButton"
               >
                 View
@@ -36,18 +49,14 @@ function SubjectCard({
               <a
                 href={
                   file.downloadUrl ||
-                  file.filepath
+                  file.filepath ||
+                  file.url
                 }
                 target="_blank"
                 rel="noopener noreferrer"
-                className="downloadLink"
+                className="downloadButton"
               >
-                <button
-                  type="button"
-                  className="downloadButton"
-                >
-                  Download
-                </button>
+                Download
               </a>
 
               {deleteFile && (

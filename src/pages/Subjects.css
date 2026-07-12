@@ -1,226 +1,174 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  background: #f3f4f6;
-  font-family: Arial, sans-serif;
-}
-
-.subjectFilesMain {
+.subjectsPageMain {
   min-height: 100vh;
   padding: 45px 0 80px;
-  animation: fadePage 0.7s ease;
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(79, 70, 229, 0.18),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(124, 58, 237, 0.15),
+      transparent 32%
+    ),
+    #0f172a;
 }
 
-.subjectFilesContainer {
-  width: min(92%, 1300px);
+.subjectsContainer {
+  width: min(92%, 1250px);
   margin: 0 auto;
 }
 
-.subjectFilesHeader {
-  margin-bottom: 35px;
+.subjectsPageHeader {
+  margin-bottom: 38px;
   text-align: center;
-  animation: slideDown 0.7s ease;
+  animation: subjectsSlideDown 0.6s ease;
 }
 
-.subjectFilesTitle {
-  font-size: clamp(32px, 5vw, 56px);
+.subjectsSemesterTitle {
+  margin: 0;
+  font-size: clamp(32px, 5vw, 54px);
   color: #ffffff;
   font-weight: 800;
-  margin-bottom: 12px;
-  word-break: break-word;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
 }
 
-.subjectFilesSemester {
-  font-size: clamp(16px, 2vw, 22px);
-  color: #60a5fa;
-  font-weight: 700;
-}
-
-.subjectFilesLoading,
-.subjectFilesEmpty {
-  width: 100%;
-  padding: 35px 20px;
-  text-align: center;
-  background: #ffffff;
-  color: #475569;
-  border-radius: 14px;
+.subjectsSubtitle {
+  margin-top: 10px;
+  color: #cbd5e1;
   font-size: 17px;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+.subjectsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
 }
 
-/* Full-screen viewer */
-.fileViewerOverlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1000000;
-  background: rgba(2, 6, 23, 0.86);
-  backdrop-filter: blur(5px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  animation: viewerFadeIn 0.25s ease;
+
+.subjectsCardLink {
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+  opacity: 0;
+  animation:
+    subjectsCardEntry 0.55s ease forwards;
 }
 
-.fileViewerModal {
-  width: min(1100px, 96vw);
-  height: min(850px, 92vh);
-  background: #111827;
+.subjectsCard {
+  height: 100%;
+  min-height: 190px;
+  padding: 22px;
   border-radius: 18px;
-  overflow: hidden;
+  border:
+    1px solid rgba(255, 255, 255, 0.1);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.11),
+      rgba(255, 255, 255, 0.04)
+    );
+
+  backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.24);
+
   display: flex;
   flex-direction: column;
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55);
-}
-
-.fileViewerHeader {
-  flex-shrink: 0;
-  min-height: 68px;
-  padding: 14px 18px;
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
-  color: #ffffff;
-  display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 15px;
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-.fileViewerTitle {
-  max-width: 850px;
-  font-size: 18px;
-  line-height: 1.3;
-  word-break: break-word;
+.subjectsCard:hover {
+  transform: translateY(-7px);
+  border-color:
+    rgba(129, 140, 248, 0.65);
+
+  box-shadow:
+    0 18px 45px rgba(79, 70, 229, 0.28);
 }
 
-.fileViewerType {
-  margin-top: 4px;
-  font-size: 12px;
-  opacity: 0.8;
-}
+.subjectsCardIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 13px;
+  background:
+    linear-gradient(
+      135deg,
+      #4f46e5,
+      #7c3aed
+    );
 
-.fileViewerClose {
-  flex-shrink: 0;
-  width: 38px;
-  height: 38px;
-  border: none;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.16);
-  color: #ffffff;
-  font-size: 20px;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-.fileViewerClose:hover {
-  background: rgba(255, 255, 255, 0.28);
-  transform: scale(1.06);
-}
-
-.fileViewerContent {
-  flex: 1;
-  min-height: 0;
-  overflow: auto;
-  background: #020617;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  font-size: 25px;
+
+  box-shadow:
+    0 8px 22px rgba(79, 70, 229, 0.35);
 }
 
-/* PDF */
-.pdfViewer {
-  width: 100%;
-  height: 100%;
-  min-height: 500px;
-  border: none;
-  background: #ffffff;
+.subjectsCardTop {
+  margin-top: 22px;
 }
 
-/* Image */
-.imageViewer {
-  display: block;
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  padding: 12px;
-}
-
-/* Video */
-.videoViewer {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  max-height: 100%;
-  background: #000000;
-  object-fit: contain;
-}
-
-/* Unsupported */
-.unsupportedFile {
-  padding: 30px;
-  text-align: center;
+.subjectsName {
+  margin: 0;
   color: #ffffff;
+  font-size: 22px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
 }
 
-.unsupportedFile p {
-  margin-bottom: 20px;
-}
-
-.openFileButton,
-.openNewTabButton {
+.subjectsFileCount {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  border-radius: 9px;
-  background: #4f46e5;
-  color: #ffffff;
-  padding: 10px 16px;
+  margin-top: 10px;
+  padding: 6px 11px;
+  border-radius: 999px;
+
+  background:
+    rgba(99, 102, 241, 0.18);
+
+  color: #c7d2fe;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.subjectsOpenText {
+  margin-top: 22px;
+  color: #a5b4fc;
   font-size: 14px;
   font-weight: 700;
-  transition: 0.2s ease;
 }
 
-.openFileButton:hover,
-.openNewTabButton:hover {
-  background: #4338ca;
+.subjectsMessage {
+  width: 100%;
+  padding: 35px 20px;
+  border-radius: 16px;
+
+  background:
+    rgba(255, 255, 255, 0.08);
+
+  color: #e2e8f0;
+  text-align: center;
+  font-size: 17px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.1);
 }
 
-.fileViewerFooter {
-  flex-shrink: 0;
-  padding: 12px 16px;
-  background: #111827;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 10px;
-}
-
-.closeViewerButton {
-  border: none;
-  border-radius: 9px;
-  background: #ef4444;
-  color: #ffffff;
-  padding: 10px 18px;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.closeViewerButton:hover {
-  background: #dc2626;
-}
-
-@keyframes slideDown {
+@keyframes subjectsSlideDown {
   from {
     opacity: 0;
-    transform: translateY(-40px);
+    transform: translateY(-25px);
   }
 
   to {
@@ -229,120 +177,83 @@ body {
   }
 }
 
-@keyframes fadePage {
+@keyframes subjectsCardEntry {
   from {
     opacity: 0;
+    transform:
+      translateY(22px) scale(0.97);
   }
 
   to {
     opacity: 1;
+    transform:
+      translateY(0) scale(1);
   }
 }
 
-@keyframes viewerFadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-/* Tablet */
 @media (max-width: 768px) {
-  .subjectFilesMain {
-    padding-top: 30px;
+  .subjectsPageMain {
+    padding: 32px 0 70px;
   }
 
-  .subjectFilesContainer {
+  .subjectsContainer {
     width: 94%;
   }
 
-  .fileViewerOverlay {
-    padding: 10px;
+  .subjectsPageHeader {
+    margin-bottom: 28px;
   }
 
-  .fileViewerModal {
-    width: 100%;
-    height: 94vh;
-    border-radius: 14px;
+    .subjectsGrid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .fileViewerTitle {
-    font-size: 16px;
+
+  .subjectsCard {
+    min-height: 170px;
+    padding: 17px;
   }
 
-  .pdfViewer {
-    min-height: 450px;
+  .subjectsName {
+    font-size: 18px;
   }
 }
 
-/* Phone */
-@media (max-width: 500px) {
-  .subjectFilesMain {
-    padding: 25px 0 70px;
+@media (max-width: 520px) {
+  .subjectsPageMain {
+    padding: 25px 0 65px;
   }
 
-  .subjectFilesHeader {
-    margin-bottom: 25px;
-  }
-
-  .fileViewerOverlay {
-    padding: 0;
-  }
-
-  .fileViewerModal {
-    width: 100vw;
-    height: 100dvh;
-    border-radius: 0;
-  }
-
-  .fileViewerHeader {
-    min-height: 60px;
-    padding: 10px 12px;
-  }
-
-  .fileViewerTitle {
-    max-width: calc(100vw - 80px);
+  .subjectsSubtitle {
     font-size: 14px;
   }
 
-  .fileViewerType {
-    font-size: 10px;
+   .subjectsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
   }
 
-  .fileViewerClose {
-    width: 35px;
-    height: 35px;
+  .subjectsCard {
+    min-height: 155px;
+    border-radius: 15px;
+  }
+
+  .subjectsCardIcon {
+    width: 42px;
+    height: 42px;
+    font-size: 21px;
+  }
+
+  .subjectsName {
     font-size: 17px;
   }
 
-  .pdfViewer {
-    width: 100%;
-    height: 100%;
-    min-height: 0;
-  }
-
-  .imageViewer {
-    max-width: 100%;
-    max-height: 100%;
-    padding: 6px;
-  }
-
-  .videoViewer {
-    width: 100%;
-    max-height: 100%;
-  }
-
-  .fileViewerFooter {
-    padding: 9px;
-  }
-
-  .openNewTabButton,
-  .closeViewerButton {
-    flex: 1;
-    padding: 9px 8px;
+  .subjectsFileCount {
     font-size: 12px;
+  }
+}
+@media (max-width: 900px) {
+  .subjectsGrid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }

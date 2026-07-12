@@ -17,12 +17,23 @@ function SubjectFiles({ setCurrentPDF }) {
 
       const res = await API.get("/files/myfiles");
 
-      const semesterFiles = res.data?.[semester] || {};
-      const subjectFiles = semesterFiles?.[subject] || [];
+      const semesterFiles =
+        res.data?.[semester] || {};
 
-      setFiles(subjectFiles);
+      const subjectFiles =
+        semesterFiles?.[subject] || [];
+
+      setFiles(
+        Array.isArray(subjectFiles)
+          ? subjectFiles
+          : []
+      );
     } catch (err) {
-      console.error("Files loading error:", err);
+      console.error(
+        "Files loading error:",
+        err
+      );
+
       setFiles([]);
     } finally {
       setLoading(false);
@@ -35,7 +46,12 @@ function SubjectFiles({ setCurrentPDF }) {
 
   useEffect(() => {
     return () => {
-      setCurrentPDF(null);
+      // Prop available ho tabhi call hoga
+      if (
+        typeof setCurrentPDF === "function"
+      ) {
+        setCurrentPDF(null);
+      }
     };
   }, [setCurrentPDF]);
 
@@ -51,12 +67,21 @@ function SubjectFiles({ setCurrentPDF }) {
 
       if (selectedFile?._id === id) {
         setSelectedFile(null);
-        setCurrentPDF(null);
+
+        if (
+          typeof setCurrentPDF ===
+          "function"
+        ) {
+          setCurrentPDF(null);
+        }
       }
 
       await loadFiles();
     } catch (err) {
-      console.error("Delete error:", err);
+      console.error(
+        "Delete error:",
+        err
+      );
 
       alert(
         err.response?.data?.message ||
@@ -65,56 +90,70 @@ function SubjectFiles({ setCurrentPDF }) {
     }
   };
 
-  const openFile = (file) => {
-    const fileUrl =
-      file.filepath ||
-      file.downloadUrl ||
-      file.url;
-
-    const fileType = file.fileType || "";
-
-    setSelectedFile({
-      ...file,
-      fileUrl,
-      fileType
-    });
-
-    // AI ko sirf PDF URL bhejo
-    if (fileType === "application/pdf") {
-      setCurrentPDF(fileUrl);
-    } else {
-      setCurrentPDF(null);
-    }
+  const getFileUrl = (file) => {
+    return (
+      file?.filepath ||
+      file?.downloadUrl ||
+      file?.secureUrl ||
+      file?.url ||
+      ""
+    );
   };
 
-  const closeViewer = () => {
-    setSelectedFile(null);
-    setCurrentPDF(null);
+  const getFileName = (file) => {
+    return (
+      file?.displayName ||
+      file?.filename ||
+      file?.originalName ||
+      file?.originalname ||
+      "Untitled File"
+    );
   };
 
-  const getFileCategory = () => {
-    if (!selectedFile) return "";
+  const getOriginalFileName = (file) => {
+    return (
+      file?.originalName ||
+      file?.originalname ||
+      file?.filename ||
+      file?.displayName ||
+      ""
+    );
+  };
 
-    const type = selectedFile.fileType || "";
-    const name = selectedFile.filename?.toLowerCase() || "";
+  const getFileCategory = (file) => {
+    if (!file) return "other";
+
+    const fileType = (
+      file.fileType ||
+      file.mimetype ||
+      file.mimeType ||
+      ""
+    ).toLowerCase();
+
+    const fileName =
+      getOriginalFileName(file).toLowerCase();
 
     if (
-      type === "application/pdf" ||
-      name.endsWith(".pdf")
+      fileType.includes("pdf") ||
+      fileName.endsWith(".pdf")
     ) {
       return "pdf";
     }
 
     if (
-      type.startsWith("image/") ||
-      /\.(jpg|jpeg|png|webp|gif)$/i.test(name)
+      fileType.startsWith("image/") ||
+      /\.(jpg|jpeg|png|webp|gif|bmp|svg)$/i.test(
+        fileName
+      )
     ) {
       return "image";
     }
 
     if (
-      type.startsWith("video/") ||
-      /\.(mp4|avi|mkv|mov)$/i.test(name)
+      fileType.startsWith("video/") ||
+      /\.(mp4|avi|mkv|mov|webm)$/i.test(
+        fileName
+      )
     ) {
       return "video";
     }
@@ -122,7 +161,52 @@ function SubjectFiles({ setCurrentPDF }) {
     return "other";
   };
 
-  const fileCategory = getFileCategory();
+  const openFile = (file) => {
+    const fileUrl = getFileUrl(file);
+    const fileCategory =
+      getFileCategory(file);
+
+    if (!fileUrl) {
+      alert("File URL nahi mila.");
+      console.error(
+        "Missing file URL:",
+        file
+      );
+      return;
+    }
+
+    const preparedFile = {
+      ...file,
+      fileUrl,
+      displayTitle: getFileName(file),
+      detectedCategory: fileCategory,
+    };
+
+    // Pehle modal open karo
+    setSelectedFile(preparedFile);
+
+    // AI ko sirf PDF URL bhejo
+    if (
+      typeof setCurrentPDF ===
+      "function"
+    ) {
+      if (fileCategory === "pdf") {
+        setCurrentPDF(fileUrl);
+      } else {
+        setCurrentPDF(null);
+      }
+    }
+  };
+
+  const closeViewer = () => {
+    setSelectedFile(null);
+
+    if (
+      typeof setCurrentPDF === "function"
+    ) {
+      setCurrentPDF(null);
+    }
+  };
 
   return (
     <div className="subjectFilesMain">
@@ -143,27 +227,41 @@ function SubjectFiles({ setCurrentPDF }) {
           </div>
         ) : files.length === 0 ? (
           <div className="subjectFilesEmpty">
-            No files found in this subject.
+            No files found in this
+            subject.
           </div>
         ) : (
           <SubjectCard
             files={files}
             deleteFile={deleteFile}
-            setCurrentPDF={openFile}
+            onView={openFile}
           />
         )}
 
         {selectedFile && (
-          <div className="fileViewerOverlay">
-            <div className="fileViewerModal">
+          <div
+            className="fileViewerOverlay"
+            onClick={closeViewer}
+          >
+            <div
+              className="fileViewerModal"
+              onClick={(e) =>
+                e.stopPropagation()
+              }
+            >
               <div className="fileViewerHeader">
-                <div>
+                <div className="fileViewerHeading">
                   <h2 className="fileViewerTitle">
-                    {selectedFile.filename}
+                    {
+                      selectedFile.displayTitle
+                    }
                   </h2>
 
                   <p className="fileViewerType">
-                    {selectedFile.fileType}
+                    {selectedFile.fileType ||
+                      selectedFile.mimetype ||
+                      selectedFile.mimeType ||
+                      selectedFile.detectedCategory}
                   </p>
                 </div>
 
@@ -171,47 +269,68 @@ function SubjectFiles({ setCurrentPDF }) {
                   type="button"
                   className="fileViewerClose"
                   onClick={closeViewer}
+                  aria-label="Close viewer"
                 >
                   ✕
                 </button>
               </div>
 
               <div className="fileViewerContent">
-                {fileCategory === "pdf" && (
+                {selectedFile.detectedCategory ===
+                  "pdf" && (
                   <iframe
-                    src={selectedFile.fileUrl}
-                    title={selectedFile.filename}
+                    src={`${selectedFile.fileUrl}#toolbar=1`}
+                    title={
+                      selectedFile.displayTitle
+                    }
                     className="pdfViewer"
                   />
                 )}
 
-                {fileCategory === "image" && (
+                {selectedFile.detectedCategory ===
+                  "image" && (
                   <img
-                    src={selectedFile.fileUrl}
-                    alt={selectedFile.filename}
+                    src={
+                      selectedFile.fileUrl
+                    }
+                    alt={
+                      selectedFile.displayTitle
+                    }
                     className="imageViewer"
                   />
                 )}
 
-                {fileCategory === "video" && (
+                {selectedFile.detectedCategory ===
+                  "video" && (
                   <video
-                    src={selectedFile.fileUrl}
+                    src={
+                      selectedFile.fileUrl
+                    }
                     className="videoViewer"
                     controls
                     playsInline
                   >
-                    Your browser does not support video.
+                    Your browser does not
+                    support video.
                   </video>
                 )}
 
-                {fileCategory === "other" && (
+                {selectedFile.detectedCategory ===
+                  "other" && (
                   <div className="unsupportedFile">
+                    <div className="unsupportedIcon">
+                      📁
+                    </div>
+
                     <p>
-                      Is file ka preview available nahi hai.
+                      Is file ka preview
+                      available nahi hai.
                     </p>
 
                     <a
-                      href={selectedFile.fileUrl}
+                      href={
+                        selectedFile.fileUrl
+                      }
                       target="_blank"
                       rel="noopener noreferrer"
                       className="openFileButton"
@@ -224,7 +343,9 @@ function SubjectFiles({ setCurrentPDF }) {
 
               <div className="fileViewerFooter">
                 <a
-                  href={selectedFile.fileUrl}
+                  href={
+                    selectedFile.fileUrl
+                  }
                   target="_blank"
                   rel="noopener noreferrer"
                   className="openNewTabButton"

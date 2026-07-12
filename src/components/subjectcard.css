@@ -1,174 +1,131 @@
-/* src/components/SubjectCard.css */
-
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    color: #2563eb;
+.filesGrid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(260px, 1fr)
+  );
+  gap: 20px;
 }
 
-/* GRID */
-
-.filesGrid{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 28px;
+.fileCard {
+  min-width: 0;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  animation: fileFade 0.5s ease both;
 }
 
-/* FILE CARD */
-
-.fileCard{
-    background: white;
-    border-radius: 26px;
-    color:red;
-    padding: 28px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-
-    transition: 0.4s ease;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards;
-
-    position: relative;
-    overflow: hidden;
+.fileCard h2 {
+  width: 100%;
+  margin: 0 0 16px;
+  font-size: 18px;
+  line-height: 1.4;
+  color: #1f2937;
+  overflow-wrap: anywhere;
 }
 
-/* GLOW EFFECT */
-
-.fileCard::before{
-    content: "";
-
-    position: absolute;
-
-    width: 160px;
-    height: 160px;
-
-    background: rgba(37,99,235,0.08);
-
-    border-radius: 50%;
-
-    top: -60px;
-    right: -60px;
-
-    transition: 0.4s;
+.fileButtons {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
-
-.fileCard:hover::before{
-    transform: scale(1.4);
-}
-
-/* HOVER */
-
-.fileCard:hover{
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 18px 35px rgba(37,99,235,0.18);
-}
-
-/* FILE NAME */
-
-.fileTop{
-    position: relative;
-    z-index: 2;
-}
-
-.fileName{
-    font-size: 24px;
-    font-weight: bold;
-    color: #dc2626;
-    margin-bottom: 28px;
-    word-break: break-word;
-    line-height: 1.4;
-}
-
-/* BUTTONS */
-
-.fileButtons{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    position: relative;
-    z-index: 2;
-}
-
-/* COMMON BUTTON */
 
 .viewButton,
 .downloadButton,
-.deleteButton{
-    border: none;
-    padding: 12px 20px;
-    border-radius: 12px;
-    color: white;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
+.deleteButton {
+  min-height: 40px;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
-/* BUTTON COLORS */
-
-.viewButton{
-    background: #2563eb;
+.viewButton {
+  background: #4f46e5;
+  color: #ffffff;
 }
 
-.downloadButton{
-    background: #059669;
+.downloadButton {
+  background: #16a34a;
+  color: #ffffff;
 }
 
-.deleteButton{
-    background: #dc2626;
+.deleteButton {
+  background: #dc2626;
+  color: #ffffff;
 }
-
-/* HOVER */
 
 .viewButton:hover,
 .downloadButton:hover,
-.deleteButton:hover{
-    transform: scale(1.05);
+.deleteButton:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
 }
 
-/* ANIMATION */
-
-@keyframes fadeUp{
-
-    from{
-        opacity: 0;
-        transform: translateY(35px);
-    }
-
-    to{
-        opacity: 1;
-        transform: translateY(0);
-    }
+.viewButton:active,
+.downloadButton:active,
+.deleteButton:active {
+  transform: scale(0.97);
 }
 
-/* TABLET */
+@keyframes fileFade {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
 
-@media(max-width: 900px){
-
-    .filesGrid{
-        grid-template-columns: repeat(1, 1fr);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* MOBILE */
+@media (max-width: 600px) {
+  .filesGrid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
 
-@media(max-width: 500px){
+  .fileCard {
+    padding: 15px;
+    border-radius: 12px;
+  }
 
-    .fileCard{
-        padding: 22px;
-    }
+  .fileCard h2 {
+    font-size: 15px;
+    margin-bottom: 14px;
+  }
 
-    .fileName{
-        font-size: 20px;
-    }
+  .fileButtons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
 
-    .fileButtons{
-        flex-direction: column;
-    }
+  .viewButton,
+  .downloadButton,
+  .deleteButton {
+    width: 100%;
+    min-width: 0;
+    padding: 9px 7px;
+    font-size: 12px;
+  }
 
-    .viewButton,
-    .downloadButton,
-    .deleteButton{
-        width: 100%;
-    }
+  .deleteButton {
+    grid-column: 1 / -1;
+  }
 }

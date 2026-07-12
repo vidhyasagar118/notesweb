@@ -1,110 +1,511 @@
-/* src/pages/SubjectFiles.css */
+.subjectFilesMain {
+  min-height: 100vh;
+  padding: 40px 0 80px;
+  background: #f3f4f6;
+  animation: fadePage 0.6s ease;
+}
 
-*{
-    margin: 0;
+.subjectFilesContainer {
+  width: min(92%, 1300px);
+  margin: 0 auto;
+}
+
+.subjectFilesHeader {
+  margin-bottom: 32px;
+  text-align: center;
+  animation: slideDown 0.6s ease;
+}
+
+.subjectFilesTitle {
+  font-size: clamp(30px, 5vw, 54px);
+  color: #1e293b;
+  font-weight: 800;
+  margin-bottom: 10px;
+  word-break: break-word;
+}
+
+.subjectFilesSemester {
+  font-size: clamp(16px, 2vw, 21px);
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.subjectFilesLoading,
+.subjectFilesEmpty {
+  width: 100%;
+  padding: 35px 20px;
+  text-align: center;
+  background: #ffffff;
+  color: #475569;
+  border-radius: 14px;
+  font-size: 17px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+/* Viewer overlay */
+.fileViewerOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000000;
+  background: rgba(2, 6, 23, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: viewerFadeIn 0.25s ease;
+}
+
+.fileViewerModal {
+  width: min(1100px, 96vw);
+  height: min(850px, 92vh);
+  background: #111827;
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55);
+}
+
+.fileViewerHeader {
+  flex-shrink: 0;
+  padding: 14px 18px;
+  min-height: 68px;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.fileViewerHeader > div {
+  min-width: 0;
+}
+
+.fileViewerTitle {
+  font-size: 18px;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.fileViewerType {
+  margin-top: 4px;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.fileViewerClose {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.fileViewerContent {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  background: #020617;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pdfViewer {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: white;
+}
+
+.imageViewer {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  padding: 12px;
+}
+
+.videoViewer {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  background: black;
+  object-fit: contain;
+}
+
+.unsupportedFile {
+  padding: 30px;
+  text-align: center;
+  color: white;
+}
+
+.unsupportedFile p {
+  margin-bottom: 20px;
+}
+
+.openFileButton,
+.openNewTabButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 9px;
+  background: #4f46e5;
+  color: white;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.fileViewerFooter {
+  flex-shrink: 0;
+  padding: 12px 16px;
+  background: #111827;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.closeViewerButton {
+  border: none;
+  border-radius: 9px;
+  background: #ef4444;
+  color: white;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadePage {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes viewerFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .subjectFilesMain {
+    padding: 30px 0 70px;
+  }
+
+  .subjectFilesContainer {
+    width: 94%;
+  }
+
+  .fileViewerOverlay {
+    padding: 10px;
+  }
+
+  .fileViewerModal {
+    width: 100%;
+    height: 94vh;
+    border-radius: 14px;
+  }
+
+  .fileViewerTitle {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 500px) {
+  .subjectFilesMain {
+    padding: 24px 0 65px;
+  }
+
+  .subjectFilesHeader {
+    margin-bottom: 24px;
+  }
+
+  .fileViewerOverlay {
     padding: 0;
-    box-sizing: border-box;
+  }
+
+  .fileViewerModal {
+    width: 100vw;
+    height: 100dvh;
+    border-radius: 0;
+  }
+
+  .fileViewerHeader {
+    min-height: 58px;
+    padding: 10px 12px;
+  }
+
+  .fileViewerTitle {
+    max-width: calc(100vw - 80px);
+    font-size: 14px;
+  }
+
+  .fileViewerType {
+    font-size: 10px;
+  }
+
+  .fileViewerClose {
+    width: 34px;
+    height: 34px;
+    font-size: 17px;
+  }
+
+  .imageViewer {
+    padding: 6px;
+  }
+
+  .fileViewerFooter {
+    padding: 9px;
+  }
+
+  .openNewTabButton,
+  .closeViewerButton {
+    flex: 1;
+    padding: 9px 8px;
+    font-size: 12px;
+  }
+}
+.fileViewerOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.78);
+  backdrop-filter: blur(5px);
+  box-sizing: border-box;
+  overflow-y: auto;
 }
 
-body{
-    background: #f3f4f6;
-    font-family: Arial, sans-serif;
+.fileViewerModal {
+  width: min(1100px, 100%);
+  height: min(88vh, 850px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow:
+    0 25px 70px
+    rgba(0, 0, 0, 0.35);
+  animation: fileViewerOpen 0.25s ease;
 }
 
-/* MAIN */
+@keyframes fileViewerOpen {
+  from {
+    opacity: 0;
+    transform: scale(0.96)
+      translateY(15px);
+  }
 
-.subjectFilesMain{
-    min-height: 100vh;
-    padding: 50px 0;
-    animation: fadePage 0.7s ease;
+  to {
+    opacity: 1;
+    transform: scale(1)
+      translateY(0);
+  }
 }
 
-/* CONTAINER */
-
-.subjectFilesContainer{
-    width: 88%;
-    max-width: 1300px;
-    margin: auto;
+.fileViewerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e2e8f0;
+  background: #ffffff;
 }
 
-/* HEADER */
+.fileViewerHeading {
+  min-width: 0;
+}
 
-.subjectFilesHeader{
-    margin-bottom: 45px;
+.fileViewerTitle {
+  margin: 0;
+  color: #172033;
+  font-size: 20px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fileViewerType {
+  margin: 5px 0 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.fileViewerClose {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #334155;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.fileViewerClose:hover {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.fileViewerContent {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  background: #e9eef5;
+}
+
+.pdfViewer {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  border: none;
+  background: #ffffff;
+}
+
+.imageViewer {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.videoViewer {
+  width: 100%;
+  max-height: 100%;
+  background: #000000;
+}
+
+.unsupportedFile {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.unsupportedIcon {
+  margin-bottom: 12px;
+  font-size: 55px;
+}
+
+.unsupportedFile p {
+  margin: 0 0 18px;
+  color: #475569;
+}
+
+.openFileButton {
+  display: inline-flex;
+  padding: 11px 20px;
+  border-radius: 9px;
+  background: #4f46e5;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.fileViewerFooter {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-top: 1px solid #e2e8f0;
+  background: #ffffff;
+}
+
+.openNewTabButton,
+.closeViewerButton {
+  padding: 10px 17px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.openNewTabButton {
+  background: #4f46e5;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.closeViewerButton {
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+}
+
+@media (max-width: 600px) {
+  .fileViewerOverlay {
+    padding: 0;
+  }
+
+  .fileViewerModal {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+
+  .fileViewerHeader {
+    padding: 13px 14px;
+  }
+
+  .fileViewerTitle {
+    font-size: 16px;
+  }
+
+  .fileViewerFooter {
+    padding: 12px;
+  }
+
+  .openNewTabButton,
+  .closeViewerButton {
+    flex: 1;
     text-align: center;
-    animation: slideDown 0.7s ease;
-}
+  }
 
-/* TITLE */
-
-.subjectFilesTitle{
-    font-size: 56px;
-
-    color: white;
-    font-weight: bold;
-    margin-bottom: 12px;
-}
-
-/* SEMESTER */
-
-.subjectFilesSemester{
-    font-size: 22px;
-    color: #2563eb;
-    font-weight: bold;
-}
-
-/* ANIMATIONS */
-
-@keyframes slideDown{
-
-    from{
-        opacity: 0;
-        transform: translateY(-40px);
-    }
-
-    to{
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadePage{
-
-    from{
-        opacity: 0;
-    }
-
-    to{
-        opacity: 1;
-    }
-}
-
-/* TABLET */
-
-@media(max-width: 768px){
-
-    .subjectFilesTitle{
-        font-size: 40px;
-    }
-
-    .subjectFilesSemester{
-        font-size: 18px;
-    }
-
-    .subjectFilesContainer{
-        width: 92%;
-    }
-}
-
-/* MOBILE */
-
-@media(max-width: 500px){
-
-    .subjectFilesTitle{
-        font-size: 32px;
-    }
-
-    .subjectFilesSemester{
-        font-size: 16px;
-    }
+  .pdfViewer {
+    min-height: 100%;
+  }
 }
