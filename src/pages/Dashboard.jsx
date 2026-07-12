@@ -13,6 +13,7 @@ function Dashboard() {
   const [files, setFiles] = useState({});
   const [groupCode, setGroupCode] = useState("");
   const [sharedFiles, setSharedFiles] = useState(null);
+const [customSemester, setCustomSemester] = useState("");
 
   const navigate = useNavigate();
 
@@ -53,51 +54,60 @@ function Dashboard() {
 
     verifyUser();
   }, [navigate]);
+const uploadFile = async () => {
+  const finalSemester =
+    semester === "Other"
+      ? customSemester.trim()
+      : semester;
 
-  const uploadFile = async () => {
-    if (!semester || !subject || filesToUpload.length === 0) {
-      alert("Please fill all fields");
-      return;
-    }
+  if (
+    !finalSemester ||
+    !subject.trim() ||
+    filesToUpload.length === 0
+  ) {
+    alert("Please fill all fields");
+    return;
+  }
 
-    const formData = new FormData();
+  const formData = new FormData();
 
-    formData.append("semester", semester);
-    formData.append("subject", subject);
+  formData.append("semester", finalSemester);
+  formData.append("subject", subject.trim());
 
-    filesToUpload.forEach((file) => {
-      formData.append("files", file);
+  filesToUpload.forEach((file) => {
+    formData.append("files", file);
+  });
+
+  try {
+    setUploading(true);
+
+    await API.post("/files/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      timeout: 1000 * 60 * 30,
     });
 
-    try {
-      setUploading(true);
+    alert("Files Uploaded Successfully");
 
-      await API.post("/files/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        timeout: 1000 * 60 * 30,
-      });
+    setSemester("");
+    setCustomSemester("");
+    setSubject("");
+    setFilesToUpload([]);
 
-      alert("Files Uploaded");
+    await loadFiles();
+  } catch (err) {
+    console.log(err);
 
-      setSemester("");
-      setSubject("");
-      setFilesToUpload([]);
-
-      await loadFiles();
-    } catch (err) {
-      console.log(err);
-
-      alert(
-        err.response?.data?.message ||
-        "Upload failed"
-      );
-    } finally {
-      setUploading(false);
-    }
-  };
-
+    alert(
+      err.response?.data?.message ||
+      err.response?.data?.error ||
+      "Upload failed"
+    );
+  } finally {
+    setUploading(false);
+  }
+};
   const openShared = async () => {
     if (!groupCode.trim()) {
       alert("Please enter group code");
@@ -184,8 +194,18 @@ function Dashboard() {
           <option value="Semester 8">
             Semester 8
           </option>
-        </select>
+            <option value="Other">Other / School Class</option>
 
+        </select>
+{semester === "Other" && (
+  <input
+    className="subjectinp"
+    type="text"
+    placeholder="Enter Class or Course, e.g. Class 10, Class 12, JEE"
+    value={customSemester}
+    onChange={(e) => setCustomSemester(e.target.value)}
+  />
+)}
         <input
           className="subjectinp"
           type="text"
