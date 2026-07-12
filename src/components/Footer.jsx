@@ -9,7 +9,7 @@ function Footer() {
       <div className="footer-container">
         <div className="footer-brand">
           <Link to="/" className="footer-logo">
-           THENotes<span>onlne</span>
+           THENotes.<span>onlne</span>
           </Link>
 
           <p>
