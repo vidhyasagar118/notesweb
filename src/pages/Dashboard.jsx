@@ -14,7 +14,7 @@ function Dashboard() {
   const [groupCode, setGroupCode] = useState("");
   const [sharedFiles, setSharedFiles] = useState(null);
 const [customSemester, setCustomSemester] = useState("");
-
+const [visibility, setVisibility] = useState("public");
   const navigate = useNavigate();
 
   const loadFiles = async () => {
@@ -73,7 +73,7 @@ const uploadFile = async () => {
 
   formData.append("semester", finalSemester);
   formData.append("subject", subject.trim());
-
+formData.append("visibility", visibility);
   filesToUpload.forEach((file) => {
     formData.append("files", file);
   });
@@ -94,6 +94,7 @@ const uploadFile = async () => {
     setCustomSemester("");
     setSubject("");
     setFilesToUpload([]);
+    setVisibility("public");
 
     await loadFiles();
   } catch (err) {
@@ -214,11 +215,50 @@ const uploadFile = async () => {
           onChange={(e) => setSubject(e.target.value)}
         />
 
+<div className="visibility-section">
+  <p className="visibility-title">
+    Who can see these files?
+  </p>
+
+  <label className="visibility-option">
+    <input
+      type="radio"
+      name="visibility"
+      value="public"
+      checked={visibility === "public"}
+      onChange={(e) => setVisibility(e.target.value)}
+    />
+
+    <span>
+      🌐 Public
+      <small>
+        Group code wale users ye files dekh sakte hain
+      </small>
+    </span>
+  </label>
+
+  <label className="visibility-option">
+    <input
+      type="radio"
+      name="visibility"
+      value="private"
+      checked={visibility === "private"}
+      onChange={(e) => setVisibility(e.target.value)}
+    />
+
+    <span>
+      🔒 Private
+      <small>
+        Sirf tum apne account me ye files dekh sakte ho
+      </small>
+    </span>
+  </label>
+</div>
         <input
           className="fileuploadinp"
           type="file"
           multiple
-          accept="accept=.pdf,.mp4,.avi,.mkv,.mov,.jpg,.jpeg,.png,.webp,.gif"
+          accept=".pdf,.mp4,.avi,.mkv,.mov,.jpg,.jpeg,.png,.webp,.gif"
           onChange={(e) =>
             setFilesToUpload(
               Array.from(e.target.files)

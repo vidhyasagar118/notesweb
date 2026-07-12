@@ -1,234 +1,348 @@
-/* src/pages/Subjects.css */
-
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-    background: #f3f4f6;
-    font-family: Arial, sans-serif;
-    overflow-x: hidden;
+body {
+  background: #f3f4f6;
+  font-family: Arial, sans-serif;
 }
 
-/* MAIN PAGE */
-
-.subjectsPageMain{
-    min-height: 100vh;
-    padding: 50px 0;
-    animation: fadePage 0.8s ease;
-    background-color: #111827;
+.subjectFilesMain {
+  min-height: 100vh;
+  padding: 45px 0 80px;
+  animation: fadePage 0.7s ease;
 }
 
-/* CONTAINER */
-
-.subjectsContainer{
-    width: 88%;
-    max-width: 1350px;
-    margin: auto;
+.subjectFilesContainer {
+  width: min(92%, 1300px);
+  margin: 0 auto;
 }
 
-/* TITLE */
-
-.subjectsSemesterTitle{
-    font-size: 55px;
-    font-weight: bold;
-    text-align: center;
-    color: white;
-    margin-bottom: 50px;
-    animation: slideDown 0.8s ease;
+.subjectFilesHeader {
+  margin-bottom: 35px;
+  text-align: center;
+  animation: slideDown 0.7s ease;
 }
 
-/* GRID */
-
-.subjectsGrid{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+.subjectFilesTitle {
+  font-size: clamp(32px, 5vw, 56px);
+  color: #ffffff;
+  font-weight: 800;
+  margin-bottom: 12px;
+  word-break: break-word;
 }
 
-/* LINK */
+.subjectFilesSemester {
+  font-size: clamp(16px, 2vw, 22px);
+  color: #60a5fa;
+  font-weight: 700;
+}
 
-.subjectsCardLink{
-    text-decoration: none;
-    color: inherit;
+.subjectFilesLoading,
+.subjectFilesEmpty {
+  width: 100%;
+  padding: 35px 20px;
+  text-align: center;
+  background: #ffffff;
+  color: #475569;
+  border-radius: 14px;
+  font-size: 17px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+/* Full-screen viewer */
+.fileViewerOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000000;
+  background: rgba(2, 6, 23, 0.86);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: viewerFadeIn 0.25s ease;
+}
+
+.fileViewerModal {
+  width: min(1100px, 96vw);
+  height: min(850px, 92vh);
+  background: #111827;
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55);
+}
+
+.fileViewerHeader {
+  flex-shrink: 0;
+  min-height: 68px;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.fileViewerTitle {
+  max-width: 850px;
+  font-size: 18px;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.fileViewerType {
+  margin-top: 4px;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.fileViewerClose {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.fileViewerClose:hover {
+  background: rgba(255, 255, 255, 0.28);
+  transform: scale(1.06);
+}
+
+.fileViewerContent {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  background: #020617;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* PDF */
+.pdfViewer {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  border: none;
+  background: #ffffff;
+}
+
+/* Image */
+.imageViewer {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  padding: 12px;
+}
+
+/* Video */
+.videoViewer {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  background: #000000;
+  object-fit: contain;
+}
+
+/* Unsupported */
+.unsupportedFile {
+  padding: 30px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.unsupportedFile p {
+  margin-bottom: 20px;
+}
+
+.openFileButton,
+.openNewTabButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 9px;
+  background: #4f46e5;
+  color: #ffffff;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  transition: 0.2s ease;
+}
+
+.openFileButton:hover,
+.openNewTabButton:hover {
+  background: #4338ca;
+}
+
+.fileViewerFooter {
+  flex-shrink: 0;
+  padding: 12px 16px;
+  background: #111827;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+.closeViewerButton {
+  border: none;
+  border-radius: 9px;
+  background: #ef4444;
+  color: #ffffff;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.closeViewerButton:hover {
+  background: #dc2626;
+}
+
+@keyframes slideDown {
+  from {
     opacity: 0;
-    animation: fadeUp 0.7s ease forwards;
+    transform: translateY(-40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* CARD */
+@keyframes fadePage {
+  from {
+    opacity: 0;
+  }
 
-.subjectsCard{
-    background: white;
-    border-radius: 28px;
-    padding: 35px 28px;
-    min-height: 220px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    transition: 0.4s ease;
-
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-
-    position: relative;
-    overflow: hidden;
+  to {
+    opacity: 1;
+  }
 }
 
-/* GLOW EFFECT */
+@keyframes viewerFadeIn {
+  from {
+    opacity: 0;
+  }
 
-.subjectsCard::before{
-    content: "";
-
-    position: absolute;
-
-    width: 180px;
-    height: 180px;
-
-    background: rgba(37,99,235,0.08);
-
-    border-radius: 50%;
-
-    top: -60px;
-    right: -60px;
-
-    transition: 0.5s;
+  to {
+    opacity: 1;
+  }
 }
 
-.subjectsCard:hover::before{
-    transform: scale(1.5);
-}
+/* Tablet */
+@media (max-width: 768px) {
+  .subjectFilesMain {
+    padding-top: 30px;
+  }
 
-/* HOVER */
+  .subjectFilesContainer {
+    width: 94%;
+  }
 
-.subjectsCard:hover{
-    transform: translateY(-10px) scale(1.03);
-    box-shadow: 0 20px 40px rgba(37,99,235,0.18);
-}
+  .fileViewerOverlay {
+    padding: 10px;
+  }
 
-/* TOP */
-
-.subjectsCardTop{
-    position: relative;
-    z-index: 2;
-
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-
+  .fileViewerModal {
     width: 100%;
+    height: 94vh;
+    border-radius: 14px;
+  }
+
+  .fileViewerTitle {
+    font-size: 16px;
+  }
+
+  .pdfViewer {
+    min-height: 450px;
+  }
 }
 
-/* SUBJECT NAME */
+/* Phone */
+@media (max-width: 500px) {
+  .subjectFilesMain {
+    padding: 25px 0 70px;
+  }
 
-.subjectsName{
-    font-size: 32px;
-    font-weight: bold;
-    color: #111827;
-    line-height: 1.4;
-    word-break: break-word;
-}
+  .subjectFilesHeader {
+    margin-bottom: 25px;
+  }
 
-/* FILE COUNT */
+  .fileViewerOverlay {
+    padding: 0;
+  }
 
-.subjectsFileCount{
-    width: fit-content;
+  .fileViewerModal {
+    width: 100vw;
+    height: 100dvh;
+    border-radius: 0;
+  }
 
-    background: linear-gradient(135deg,#2563eb,#3b82f6);
+  .fileViewerHeader {
+    min-height: 60px;
+    padding: 10px 12px;
+  }
 
-    color: white;
+  .fileViewerTitle {
+    max-width: calc(100vw - 80px);
+    font-size: 14px;
+  }
 
-    padding: 10px 18px;
+  .fileViewerType {
+    font-size: 10px;
+  }
 
-    border-radius: 40px;
+  .fileViewerClose {
+    width: 35px;
+    height: 35px;
+    font-size: 17px;
+  }
 
-    font-size: 15px;
-    font-weight: bold;
+  .pdfViewer {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+  }
 
-    letter-spacing: 0.5px;
-}
+  .imageViewer {
+    max-width: 100%;
+    max-height: 100%;
+    padding: 6px;
+  }
 
-/* ANIMATIONS */
+  .videoViewer {
+    width: 100%;
+    max-height: 100%;
+  }
 
-@keyframes fadeUp{
+  .fileViewerFooter {
+    padding: 9px;
+  }
 
-    from{
-        opacity: 0;
-        transform: translateY(40px);
-    }
-
-    to{
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideDown{
-
-    from{
-        opacity: 0;
-        transform: translateY(-40px);
-    }
-
-    to{
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadePage{
-
-    from{
-        opacity: 0;
-    }
-
-    to{
-        opacity: 1;
-    }
-}
-
-/* TABLET */
-
-@media(max-width: 992px){
-
-    .subjectsGrid{
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .subjectsSemesterTitle{
-        font-size: 42px;
-    }
-
-    .subjectsName{
-        font-size: 26px;
-    }
-}
-
-/* MOBILE */
-
-@media(max-width: 600px){
-
-    .subjectsContainer{
-        width: 92%;
-    }
-
-    .subjectsGrid{
-        grid-template-columns: repeat(1, 1fr);
-    }
-
-    .subjectsSemesterTitle{
-        font-size: 34px;
-        margin-bottom: 35px;
-    }
-
-    .subjectsCard{
-        min-height: 180px;
-        padding: 28px 22px;
-    }
-
-    .subjectsName{
-        font-size: 24px;
-    }
+  .openNewTabButton,
+  .closeViewerButton {
+    flex: 1;
+    padding: 9px 8px;
+    font-size: 12px;
+  }
 }
