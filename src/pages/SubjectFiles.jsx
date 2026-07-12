@@ -4,18 +4,21 @@ import API from "../api";
 import SubjectCard from "../components/SubjectCard";
 import "./SubjectFiles.css";
 
-function SubjectFiles({ setCurrentPDF }) {
+function SubjectFiles({ setCurrentFile }) {
   const { semester, subject } = useParams();
 
   const [files, setFiles] = useState([]);
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] =
+    useState(null);
   const [loading, setLoading] = useState(true);
 
   const loadFiles = async () => {
     try {
       setLoading(true);
 
-      const res = await API.get("/files/myfiles");
+      const res = await API.get(
+        "/files/myfiles"
+      );
 
       const semesterFiles =
         res.data?.[semester] || {};
@@ -46,14 +49,13 @@ function SubjectFiles({ setCurrentPDF }) {
 
   useEffect(() => {
     return () => {
-      // Prop available ho tabhi call hoga
       if (
-        typeof setCurrentPDF === "function"
+        typeof setCurrentFile === "function"
       ) {
-        setCurrentPDF(null);
+        setCurrentFile(null);
       }
     };
-  }, [setCurrentPDF]);
+  }, [setCurrentFile]);
 
   const deleteFile = async (id) => {
     const confirmed = window.confirm(
@@ -69,10 +71,10 @@ function SubjectFiles({ setCurrentPDF }) {
         setSelectedFile(null);
 
         if (
-          typeof setCurrentPDF ===
+          typeof setCurrentFile ===
           "function"
         ) {
-          setCurrentPDF(null);
+          setCurrentFile(null);
         }
       }
 
@@ -123,11 +125,11 @@ function SubjectFiles({ setCurrentPDF }) {
   const getFileCategory = (file) => {
     if (!file) return "other";
 
-    const fileType = (
+    const fileType = String(
       file.fileType ||
-      file.mimetype ||
-      file.mimeType ||
-      ""
+        file.mimetype ||
+        file.mimeType ||
+        ""
     ).toLowerCase();
 
     const fileName =
@@ -142,7 +144,7 @@ function SubjectFiles({ setCurrentPDF }) {
 
     if (
       fileType.startsWith("image/") ||
-      /\.(jpg|jpeg|png|webp|gif|bmp|svg)$/i.test(
+      /\.(jpg|jpeg|png|webp|gif)$/i.test(
         fileName
       )
     ) {
@@ -158,6 +160,14 @@ function SubjectFiles({ setCurrentPDF }) {
       return "video";
     }
 
+    if (
+  fileType.startsWith("audio/") ||
+  /\.(mp3|wav|m4a|ogg|aac|flac)$/i.test(
+    fileName
+  )
+) {
+  return "audio";
+}
     return "other";
   };
 
@@ -168,33 +178,37 @@ function SubjectFiles({ setCurrentPDF }) {
 
     if (!fileUrl) {
       alert("File URL nahi mila.");
-      console.error(
-        "Missing file URL:",
-        file
-      );
       return;
     }
+
+    const displayTitle =
+      getFileName(file);
 
     const preparedFile = {
       ...file,
       fileUrl,
-      displayTitle: getFileName(file),
+      displayTitle,
       detectedCategory: fileCategory,
     };
 
-    // Pehle modal open karo
     setSelectedFile(preparedFile);
 
-    // AI ko sirf PDF URL bhejo
     if (
-      typeof setCurrentPDF ===
-      "function"
+      typeof setCurrentFile === "function"
     ) {
-      if (fileCategory === "pdf") {
-        setCurrentPDF(fileUrl);
-      } else {
-        setCurrentPDF(null);
-      }
+      setCurrentFile({
+        url: fileUrl,
+        category: fileCategory,
+        mimeType:
+          file.fileType ||
+          file.mimetype ||
+          file.mimeType ||
+          "",
+        name: displayTitle,
+        originalName:
+          getOriginalFileName(file),
+        fileSize: file.fileSize || 0,
+      });
     }
   };
 
@@ -202,9 +216,9 @@ function SubjectFiles({ setCurrentPDF }) {
     setSelectedFile(null);
 
     if (
-      typeof setCurrentPDF === "function"
+      typeof setCurrentFile === "function"
     ) {
-      setCurrentPDF(null);
+      setCurrentFile(null);
     }
   };
 
@@ -227,8 +241,7 @@ function SubjectFiles({ setCurrentPDF }) {
           </div>
         ) : files.length === 0 ? (
           <div className="subjectFilesEmpty">
-            No files found in this
-            subject.
+            No files found in this subject.
           </div>
         ) : (
           <SubjectCard
@@ -269,7 +282,6 @@ function SubjectFiles({ setCurrentPDF }) {
                   type="button"
                   className="fileViewerClose"
                   onClick={closeViewer}
-                  aria-label="Close viewer"
                 >
                   ✕
                 </button>
@@ -314,14 +326,30 @@ function SubjectFiles({ setCurrentPDF }) {
                     support video.
                   </video>
                 )}
+{selectedFile.detectedCategory ===
+  "audio" && (
+  <div className="audioViewerWrapper">
+    <div className="audioViewerIcon">
+      🎵
+    </div>
 
+    <h3>
+      {selectedFile.displayTitle}
+    </h3>
+
+    <audio
+      src={selectedFile.fileUrl}
+      className="audioViewer"
+      controls
+      preload="metadata"
+    >
+      Your browser does not support audio.
+    </audio>
+  </div>
+)}
                 {selectedFile.detectedCategory ===
                   "other" && (
                   <div className="unsupportedFile">
-                    <div className="unsupportedIcon">
-                      📁
-                    </div>
-
                     <p>
                       Is file ka preview
                       available nahi hai.

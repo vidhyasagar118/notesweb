@@ -509,3 +509,25 @@
     min-height: 100%;
   }
 }
+.audioViewerWrapper {
+  width: 100%;
+  max-width: 650px;
+  padding: 35px 20px;
+  text-align: center;
+}
+
+.audioViewerIcon {
+  margin-bottom: 15px;
+  font-size: 65px;
+}
+
+.audioViewerWrapper h3 {
+  margin: 0 0 22px;
+  color: #1e293b;
+  font-size: 20px;
+  word-break: break-word;
+}
+
+.audioViewer {
+  width: 100%;
+}

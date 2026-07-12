@@ -418,7 +418,7 @@ function Dashboard() {
           className="fileuploadinp"
           type="file"
           multiple
-          accept=".pdf,.mp4,.avi,.mkv,.mov,.jpg,.jpeg,.png,.webp,.gif"
+          accept=".pdf,.mp4,.avi,.mkv,.mov,.webm,.jpg,.jpeg,.png,.webp,.gif,.mp3,.wav,.m4a,.ogg,.aac,.flac"
           onChange={(e) =>
             setFilesToUpload(
               Array.from(e.target.files || [])

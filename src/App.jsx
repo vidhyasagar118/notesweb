@@ -1,12 +1,12 @@
 // src/App.jsx
 
 import {
-    BrowserRouter,
-    Routes,
-    Route,
-    Navigate,
+  BrowserRouter,
+  Routes,
+  Route,
 } from "react-router-dom";
 import { useState } from "react";
+
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import SubjectsPage from "./pages/SubjectsPage";
@@ -22,88 +22,107 @@ import Disclaimer from "./pages/Disclaimer";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Footer from "./components/Footer";
 import MainNavbar from "./pages/MainNavbar";
+
 function App() {
-const [currentPDF, setCurrentPDF] = useState(null);
+  const [currentFile, setCurrentFile] =
+    useState(null);
 
-    return (
-<> 
-        <BrowserRouter>
-      {/* Har page par common navbar */}
-      <MainNavbar />
+  return (
+    <>
+      <BrowserRouter>
+        <MainNavbar />
 
-            <Routes>
+        <Routes>
+          <Route
+            path="/"
+            element={<LandingPage />}
+          />
 
-                <Route
-                    path="/"
-                    element={<LandingPage />}
+          <Route
+            path="/login"
+            element={<Login />}
+          />
+
+          <Route
+            path="/contact"
+            element={<Contact />}
+          />
+
+          <Route
+            path="/privacy-policy"
+            element={<PrivacyPolicy />}
+          />
+
+          <Route
+            path="/terms"
+            element={<Terms />}
+          />
+
+          <Route
+            path="/disclaimer"
+            element={<Disclaimer />}
+          />
+
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/subjects/:semester"
+            element={
+              <ProtectedRoute>
+                <SubjectsPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/subject/:semester/:subject"
+            element={
+              <ProtectedRoute>
+                <SubjectFiles
+                  setCurrentFile={
+                    setCurrentFile
+                  }
                 />
+              </ProtectedRoute>
+            }
+          />
 
-                 <Route
-                    path="/login"
-                    element={<Login />}
+          <Route
+            path="/sharedsubjects/:groupCode/:semester"
+            element={
+              <ProtectedRoute>
+                <SharedSubjectsPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/sharedfiles/:groupCode/:semester/:subject"
+            element={
+              <ProtectedRoute>
+                <SharedSubjectFiles
+                  setCurrentFile={
+                    setCurrentFile
+                  }
                 />
-                
-                
-                 <Route
-                    path="/contact"
-                    element={<Contact />}
-                />
-<Route path="/privacy-policy" element={<PrivacyPolicy />} />
-<Route path="/terms" element={<Terms />} />
-<Route path="/disclaimer" element={<Disclaimer />} />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
 
-                <Route
-                    path="/dashboard"
-                    element={
-                        <ProtectedRoute>
-                            <Dashboard />
-                        </ProtectedRoute>
-                    }
-                />
+        <Footer />
+      </BrowserRouter>
 
-                <Route
-                    path="/subjects/:semester"
-                    element={
-                        <ProtectedRoute>
-                            <SubjectsPage />
-                        </ProtectedRoute>
-                    }
-                />
-
-               <Route
-  path="/subject/:semester/:subject"
-  element={
-    <ProtectedRoute>
-      <SubjectFiles setCurrentPDF={setCurrentPDF} />
-    </ProtectedRoute>
-  }
-/>
-<Route
-    path="/sharedsubjects/:groupCode/:semester"
-    element={
-        <ProtectedRoute>
-            <SharedSubjectsPage />
-        </ProtectedRoute>
-    }
-/>
-
-
-<Route
-    path="/sharedfiles/:groupCode/:semester/:subject"
-    element={
-        <ProtectedRoute>
-            <SharedSubjectFiles />
-        </ProtectedRoute>
-    }
-/>
-            </Routes>
-<Footer />
-
-        </BrowserRouter>
-<GlobalAI currentPDF={currentPDF} />
-        </>
-        
-    );
+      <GlobalAI currentFile={currentFile} />
+    </>
+  );
 }
 
 export default App;

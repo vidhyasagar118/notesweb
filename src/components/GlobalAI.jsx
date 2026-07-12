@@ -3,12 +3,16 @@ import API from "../api";
 import "./globalAI.css";
 import ReactMarkdown from "react-markdown";
 
-function GlobalAI({ currentPDF }) {
-  const [showIntroMsg, setShowIntroMsg] = useState(true);
+function GlobalAI({ currentFile }) {
+  const [showIntroMsg, setShowIntroMsg] =
+    useState(true);
   const [open, setOpen] = useState(false);
-  const [question, setQuestion] = useState("");
-  const [messages, setMessages] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [question, setQuestion] =
+    useState("");
+  const [messages, setMessages] =
+    useState([]);
+  const [loading, setLoading] =
+    useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -19,9 +23,12 @@ function GlobalAI({ currentPDF }) {
   }, []);
 
   const askAI = async () => {
-    const trimmedQuestion = question.trim();
+    const trimmedQuestion =
+      question.trim();
 
-    if (!trimmedQuestion || loading) return;
+    if (!trimmedQuestion || loading) {
+      return;
+    }
 
     setLoading(true);
 
@@ -36,45 +43,90 @@ function GlobalAI({ currentPDF }) {
     setMessages(newMessages);
     setQuestion("");
 
-    let endpoint = "/ai/global-ask";
-    let payload = {
-      question: trimmedQuestion,
-    };
-
-    if (currentPDF) {
-      endpoint = "/ai/smart-ask";
-
-      payload = {
-        question: trimmedQuestion,
-        fileUrl: currentPDF,
-      };
-    }
-
     try {
-      const res = await API.post(endpoint, payload);
+      let endpoint = "/ai/global-ask";
+
+      let payload = {
+        question: trimmedQuestion,
+      };
+
+      if (currentFile?.url) {
+        endpoint = "/ai/smart-ask";
+
+        payload = {
+          question: trimmedQuestion,
+          fileUrl: currentFile.url,
+          fileCategory:
+            currentFile.category,
+          mimeType:
+            currentFile.mimeType,
+          fileName:
+            currentFile.name,
+          originalName:
+            currentFile.originalName,
+          fileSize:
+            currentFile.fileSize,
+        };
+      }
+
+      const res = await API.post(
+        endpoint,
+        payload,
+        {
+          timeout: 1000 * 60 * 10,
+        }
+      );
 
       setMessages([
         ...newMessages,
         {
           role: "ai",
           text:
-            res.data.answer ||
+            res.data?.answer ||
             "Sorry, I could not generate an answer.",
         },
       ]);
     } catch (err) {
-      console.error("AI request error:", err);
+      console.error(
+        "AI request error:",
+        err
+      );
 
       setMessages([
         ...newMessages,
         {
           role: "ai",
-          text: "Something went wrong. Please try again. 🤖",
+          text:
+            err.response?.data?.answer ||
+            err.response?.data?.message ||
+            "Something went wrong. Please try again. 🤖",
         },
       ]);
     } finally {
       setLoading(false);
     }
+  };
+
+  const fileLabel = () => {
+    if (!currentFile) return "";
+
+    if (currentFile.category === "pdf") {
+      return "📄 PDF selected";
+    }
+
+    if (
+      currentFile.category === "image"
+    ) {
+      return "🖼️ Image selected";
+    }
+
+    if (
+      currentFile.category === "video"
+    ) {
+      return "🎥 Video selected";
+    }
+
+    return "📁 File selected";
   };
 
   return (
@@ -90,13 +142,29 @@ function GlobalAI({ currentPDF }) {
       {open && (
         <div className="aiBox">
           <div className="aiHeader">
-            <span>AI Assistant</span>
+            <div>
+              <span>AI Assistant</span>
+
+              {currentFile && (
+                <small
+                  style={{
+                    display: "block",
+                    marginTop: "3px",
+                    fontSize: "11px",
+                  }}
+                >
+                  {fileLabel()}:{" "}
+                  {currentFile.name}
+                </small>
+              )}
+            </div>
 
             <button
               type="button"
               className="aiCloseBtn"
-              onClick={() => setOpen(false)}
-              aria-label="Close AI Assistant"
+              onClick={() =>
+                setOpen(false)
+              }
             >
               ✕
             </button>
@@ -105,23 +173,28 @@ function GlobalAI({ currentPDF }) {
           <div className="aiMessages">
             {messages.length === 0 && (
               <div className="ai">
-                Hello! Ask me anything about your notes or any
-                general topic.
+                {currentFile
+                  ? `Ask anything about "${currentFile.name}".`
+                  : "Hello! Ask me anything about your notes or any general topic."}
               </div>
             )}
 
-            {messages.map((msg, index) => (
-              <div
-                key={`${msg.role}-${index}`}
-                className={msg.role}
-              >
-                <ReactMarkdown>{msg.text}</ReactMarkdown>
-              </div>
-            ))}
+            {messages.map(
+              (msg, index) => (
+                <div
+                  key={`${msg.role}-${index}`}
+                  className={msg.role}
+                >
+                  <ReactMarkdown>
+                    {msg.text}
+                  </ReactMarkdown>
+                </div>
+              )
+            )}
 
             {loading && (
               <div className="ai">
-                <span className="loader"></span>
+                <span className="loader" />
               </div>
             )}
           </div>
@@ -131,9 +204,15 @@ function GlobalAI({ currentPDF }) {
               type="text"
               value={question}
               onChange={(e) =>
-                setQuestion(e.target.value)
+                setQuestion(
+                  e.target.value
+                )
               }
-              placeholder="Ask anything..."
+              placeholder={
+                currentFile
+                  ? `Ask about ${currentFile.category}...`
+                  : "Ask anything..."
+              }
               disabled={loading}
               onKeyDown={(e) => {
                 if (
@@ -150,11 +229,12 @@ function GlobalAI({ currentPDF }) {
               type="button"
               onClick={askAI}
               disabled={
-                loading || !question.trim()
+                loading ||
+                !question.trim()
               }
             >
               {loading ? (
-                <span className="loader"></span>
+                <span className="loader" />
               ) : (
                 "Send"
               )}
@@ -167,9 +247,10 @@ function GlobalAI({ currentPDF }) {
         type="button"
         className="aiButton"
         onClick={() =>
-          setOpen((previous) => !previous)
+          setOpen(
+            (previous) => !previous
+          )
         }
-        aria-label="Open AI Assistant"
       >
         🤖
       </button>
