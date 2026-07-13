@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /dashboard
+Disallow: /sharedsubjects/
+Disallow: /sharedfiles/
+
+Sitemap: https://thenotes.online/sitemap.xml
