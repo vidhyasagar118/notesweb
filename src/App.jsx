@@ -22,7 +22,7 @@ import Disclaimer from "./pages/Disclaimer";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Footer from "./components/Footer";
 import MainNavbar from "./pages/MainNavbar";
-
+import PageTracker from "./components/PageTracker";
 function App() {
   const [currentFile, setCurrentFile] =
     useState(null);
@@ -30,6 +30,8 @@ function App() {
   return (
     <>
       <BrowserRouter>
+        <PageTracker />
+
         <MainNavbar />
 
         <Routes>
