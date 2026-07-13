@@ -1,8 +1,12 @@
 User-agent: *
 Allow: /
 
+Disallow: /login
 Disallow: /dashboard
+Disallow: /subjects/
+Disallow: /subject/
 Disallow: /sharedsubjects/
 Disallow: /sharedfiles/
+Disallow: /api/
 
 Sitemap: https://www.thenotes.online/sitemap.xml
