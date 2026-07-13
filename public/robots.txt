@@ -1,7 +1,7 @@
 User-agent: *
+
 Allow: /
 
-Disallow: /login
 Disallow: /dashboard
 Disallow: /subjects/
 Disallow: /subject/
