@@ -5,4 +5,4 @@ Disallow: /dashboard
 Disallow: /sharedsubjects/
 Disallow: /sharedfiles/
 
-Sitemap: https://thenotes.online/sitemap.xml
+Sitemap: https://www.thenotes.online/sitemap.xml

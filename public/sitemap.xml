@@ -2,19 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
-    <loc>https://thenotes.online/</loc>
+    <loc>https://www.thenotes.online/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
-    <loc>https://thenotes.online/login</loc>
+    <loc>https://www.thenotes.online/login</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://thenotes.online/contact</loc>
+    <loc>https://www.thenotes.online/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
