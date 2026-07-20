@@ -23,7 +23,6 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Footer from "./components/Footer";
 import MainNavbar from "./pages/MainNavbar";
 import PageTracker from "./components/PageTracker";
-import PageSEO from "./components/PageSEO";
 function App() {
   const [currentFile, setCurrentFile] =
     useState(null);
