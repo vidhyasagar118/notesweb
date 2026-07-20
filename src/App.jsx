@@ -6,7 +6,7 @@ import {
   Route,
 } from "react-router-dom";
 import { useState } from "react";
-
+import AboutUs from "./pages/AboutUs";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import SubjectsPage from "./pages/SubjectsPage";
@@ -23,6 +23,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Footer from "./components/Footer";
 import MainNavbar from "./pages/MainNavbar";
 import PageTracker from "./components/PageTracker";
+import PageSEO from "./components/PageSEO";
 function App() {
   const [currentFile, setCurrentFile] =
     useState(null);
@@ -63,6 +64,11 @@ function App() {
           <Route
             path="/disclaimer"
             element={<Disclaimer />}
+          />
+
+  <Route
+            path="/about"
+            element={<AboutUs />}
           />
 
           <Route
