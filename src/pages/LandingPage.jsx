@@ -4,45 +4,57 @@ import  { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api";
 export default function LandingPage() {
-  const [stats, setStats] = useState({
-  totalStudents: 0,
-  totalNotes: 0,
-  subjects: 0
-});
+  const [stats, setStats] = useState(null);
+ 
 const navigate=useNavigate();
-  
 useEffect(() => {
+  let active = true;
 
   const fetchStats = async () => {
     try {
       const res = await API.get("/stats");
 
-      setStats(res.data);
-    } catch (err) {
-      console.log(err);
+      if (active) {
+        setStats(res.data);
+      }
+    } catch (error) {
+      console.error("Stats fetch error:", error);
+
+      if (active) {
+        setStats({
+          totalStudents: 0,
+          totalNotes: 0,
+          subjects: 0
+        });
+      }
     }
   };
 
+  
   fetchStats();
+  
 
-}, []);
+  return () => {
+    active = false;
+  };
+
+
+  
+}, 
+[]);
+
 const handleGetStarted = async () => {
   const token = localStorage.getItem("token");
 
-  // Token hi nahi hai to login page
   if (!token) {
     navigate("/login");
     return;
   }
 
   try {
-    // Backend se token verify
     await API.get("/auth/verify");
-
-    // Valid token hai
     navigate("/dashboard");
   } catch (error) {
-    // Expired ya invalid token remove karo
     localStorage.removeItem("token");
     localStorage.removeItem("user");
 
@@ -51,6 +63,9 @@ const handleGetStarted = async () => {
     navigate("/login");
   }
 };
+
+
+
   return (
     <div className="landing-page">
 
@@ -86,17 +101,17 @@ const handleGetStarted = async () => {
           <div className="stats">
 
             <div className="stat-box">
-<h2>{stats.totalNotes}+</h2>
+<h2>{stats ? `${stats.totalNotes}+` : "..."}</h2>
 <p>Notes Uploaded</p>
             </div>
 
             <div className="stat-box">
-<h2>{stats.totalStudents}+</h2>
+<h2>{stats ? `${stats.totalStudents}+` : "..."}</h2>
 <p>Students Joined</p>
             </div>
 
             <div className="stat-box">
-              <h2>{stats.subjects}+</h2>
+<h2>{stats ? `${stats.subjects}+` : "..."}</h2>
 <p>Subjects Covered</p>
             </div>
 
